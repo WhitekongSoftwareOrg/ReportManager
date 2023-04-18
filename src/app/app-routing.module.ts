@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: 'enabled',
@@ -16,16 +17,36 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        data: { breadcrumb: '' },
         loadChildren: () =>
           import('./modules/sites/sites.module').then((m) => m.SitesModule),
       },
       {
         path: 'sites',
-        pathMatch: 'full',
-        data: { breadcrumb: '' },
         loadChildren: () =>
           import('./modules/sites/sites.module').then((m) => m.SitesModule),
+      },
+      {
+        path: 'types',
+        loadChildren: () =>
+          import('./modules/types/types.module').then((m) => m.TypesModule),
+      },
+      {
+        path: 'groups',
+
+        loadChildren: () =>
+          import('./modules/group/group.module').then((m) => m.GroupModule),
+      },
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./modules/users/users.module').then((m) => m.UsersModule),
+      },
+      {
+        path: 'reports',
+        loadChildren: () =>
+          import('./modules/reports/reports.module').then(
+            (m) => m.ReportsModule
+          ),
       },
       {
         path: 'notfound',
@@ -40,7 +61,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, routerOptions)],
+  imports: [BrowserModule, RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

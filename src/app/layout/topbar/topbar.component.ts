@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./topbar.component.scss']
 })
 export class TopbarComponent implements OnInit {
-
+user = {
+  name: 'John Doe',
+  email: 'info@example.com',
+}
   constructor() { }
 
   ngOnInit(): void {

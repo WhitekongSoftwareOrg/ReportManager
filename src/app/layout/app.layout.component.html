@@ -1,12 +1,13 @@
-<div class="layout-container">
-  <app-sidebar></app-sidebar>
-  <div class="layout-content-wrapper">
-    <app-topbar></app-topbar>
-    <div class="layout-content">
-      <router-outlet></router-outlet>
-    </div>
+<div class="container">
+  <div class="sidebar shadow-2">
+    <app-sidebar></app-sidebar>
   </div>
-
+  <div class="content">
+    <app-topbar></app-topbar>
+    <app-header></app-header>
+    <div class="content__wrapper">
+    <router-outlet></router-outlet>
+  </div>
+  </div>
   <p-scrollTop [threshold]="500"></p-scrollTop>
-  <div class="layout-mask"></div>
 </div>

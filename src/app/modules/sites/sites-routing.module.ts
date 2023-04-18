@@ -7,18 +7,23 @@ import { EditSiteComponent } from './pages/edit-site/edit-site.component';
 const routes: Routes = [
   {
     path: '',
-    component: SiteListComponent,
-    // resolve: { siteList: SiteListResolver},
+    children: [
+      {
+        path: '',
+        component: SiteListComponent,
+      },
+      {
+        path: 'add',
+        component: AddSiteComponent,
+      },
+      {
+        path: 'edit/:id',
+        component: EditSiteComponent,
+      },
+    ],
   },
-  {
-    path: 'add',
-    component: AddSiteComponent,
-
-  },
-  {
-    path: 'edit/:id',
-    component: EditSiteComponent,
-  },
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

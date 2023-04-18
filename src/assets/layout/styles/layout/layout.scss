@@ -1,9 +1,13 @@
+@import "./fonts";
+
 * {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
-  height: 100%;
+  height: 100vh;
   font-size: 13px;
 }
 
@@ -14,7 +18,7 @@ body {
   min-height: 100%;
   background: white;
   color: black;
-  font-family: sans-serif;
+  font-family: "Poppins";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -23,12 +27,25 @@ a {
   text-decoration: none;
 }
 
-.layout-content-wrapper {
-  padding: 2rem;
+.container {
+  height: 100vh;
+  display: flex;
 }
 
-.layout-container {
-  min-height: 100vh;
+.sidebar {
+  z-index: 10;
+  width: 15%;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.content {
+  width: 85%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &__wrapper {
+    padding: 20px;
+  }
 }
 
 ::-webkit-scrollbar {
