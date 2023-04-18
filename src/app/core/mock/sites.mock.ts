@@ -36,10 +36,10 @@ export class SiteMockService {
   ];
 
   getSites(): Observable<any[]> {
-    return of(this.sites).pipe(delay(1000));
+    return of(this.sites).pipe(delay(100));
   }
 
   getSitesById(id: number | string): Observable<any> {
-    return of(this.sites.find((el) => el.id === id)).pipe(delay(1000));
+    return of(this.sites.find((el) => el.id === id)).pipe(delay(100));
   }
 }

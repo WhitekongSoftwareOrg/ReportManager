@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { SiteMockService } from 'src/app/core/mock/sites.mock';
+import { siteFields } from '../config/site.form';
 
 @Component({
   selector: 'app-edit-site',
@@ -16,7 +17,8 @@ export class EditSiteComponent implements OnInit {
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
-  fields: FormlyFieldConfig[] = [];
+  fields: FormlyFieldConfig[] = siteFields;
+
   constructor(
     private title: TitleService,
     private route: ActivatedRoute,
@@ -35,7 +37,7 @@ export class EditSiteComponent implements OnInit {
     });
     setTimeout(() => {
       this.setData();
-    }, 1200);
+    }, 200);
   }
 
   setData() {
@@ -44,9 +46,11 @@ export class EditSiteComponent implements OnInit {
         key: 'name',
         type: 'input',
         defaultValue: this.site.name,
+
         props: {
           label: 'Sitio',
           required: true,
+          cols: 12,
         },
       },
       {

@@ -44,7 +44,8 @@ a {
   overflow-x: hidden;
   overflow-y: scroll;
   &__wrapper {
-    padding: 20px;
+    padding: 0 120px;
+    margin: 50px;
   }
 }
 
