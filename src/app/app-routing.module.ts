@@ -49,7 +49,7 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'mail-list',
+        path: 'email-list',
         loadChildren: () =>
           import('./modules/mail-list/mail-list.module').then(
             (m) => m.MailListModule

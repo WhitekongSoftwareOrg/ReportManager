@@ -88,12 +88,12 @@ export class SidebarComponent implements OnInit {
         icon: 'pi pi-fw pi-send',
         items: [
           {
-            label: 'Gestionar listas de correoss',
-            url: '/mail-list',
+            label: 'Gestionar listas de correos',
+            url: '/email-list',
           },
           {
             label: 'Añadir lista de correo',
-            url: '/mail-list/add',
+            url: '/email-list/add',
           },
         ],
       },

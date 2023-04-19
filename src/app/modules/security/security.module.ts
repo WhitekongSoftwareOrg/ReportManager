@@ -5,6 +5,7 @@ import { SecurityRoutingModule } from './security-routing.module';
 import { SecurityListComponent } from './security-list/security-list.component';
 import { SecurityAddComponent } from './security-add/security-add.component';
 import { SecurityEditComponent } from './security-edit/security-edit.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { SecurityEditComponent } from './security-edit/security-edit.component';
   ],
   imports: [
     CommonModule,
-    SecurityRoutingModule
+    SecurityRoutingModule,
+    SharedModule
   ]
 })
 export class SecurityModule { }
