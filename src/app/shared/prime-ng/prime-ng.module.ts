@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule, Header, Footer } from 'primeng/api';
+import { SharedModule, Header, Footer, MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { ConfirmDialog, ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -21,6 +21,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { SidebarModule } from 'primeng/sidebar';
 import { AvatarModule } from 'primeng/avatar';
+import { SkeletonModule } from 'primeng/skeleton';
+import {ToastModule} from 'primeng/toast';
 
 export const APP_PRIMENG_MODULE = [
   SharedModule,
@@ -44,11 +46,15 @@ export const APP_PRIMENG_MODULE = [
   SidebarModule,
   ScrollTopModule,
   AvatarModule,
+  SkeletonModule,
+  ConfirmDialogModule,
+  ToastModule
+
 ];
 export const APP_PRIMENG_COMPONENTS = [Dialog, ConfirmDialog, Header, Footer];
 import { ConfirmationService } from 'primeng/api';
 
-export const APP_PRIMENG_PROVIDERS = [ConfirmationService];
+export const APP_PRIMENG_PROVIDERS = [ConfirmationService, MessageService, ConfirmationService];
 
 @NgModule({
   declarations: [],

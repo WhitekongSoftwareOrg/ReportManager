@@ -7,8 +7,11 @@ import { ReportEditComponent } from './report-edit/report-edit.component';
 const routes: Routes = [
   {
     path: '',
-    component: ReportsListComponent,
     children: [
+      {
+        path: '',
+        component: ReportsListComponent,
+      },
       {
         path: 'add',
         component: ReportAddComponent,

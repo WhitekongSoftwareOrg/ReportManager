@@ -49,6 +49,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'mail-list',
+        loadChildren: () =>
+          import('./modules/mail-list/mail-list.module').then(
+            (m) => m.MailListModule
+          ),
+      },
+      {
+        path: 'security',
+        loadChildren: () =>
+          import('./modules/security/security.module').then(
+            (m) => m.SecurityModule
+          ),
+      },
+      {
         path: 'notfound',
         loadChildren: () =>
           import('./core/notfound/notfound.module').then(

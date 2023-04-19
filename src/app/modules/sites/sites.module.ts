@@ -12,6 +12,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     SitesRoutingModule,
     SharedModule,
-  ],
+  ]
 })
 export class SitesModule {}

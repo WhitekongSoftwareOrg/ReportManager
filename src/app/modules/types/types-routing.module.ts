@@ -7,8 +7,11 @@ import { TypeEditComponent } from './pages/type-edit/type-edit.component';
 const routes: Routes = [
   {
     path: '',
-    component: TypesListComponent,
     children: [
+      {
+        path: '',
+        component: TypesListComponent,
+      },
       {
         path: 'add',
         component: TypeAddComponent,
@@ -19,6 +22,8 @@ const routes: Routes = [
       },
     ],
   },
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

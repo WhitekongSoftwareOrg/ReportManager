@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { siteFields } from '../config/site.form';
+import { siteFields as fields } from '../config/site.form';
 
 @Component({
   selector: 'app-add-site',
@@ -20,7 +20,7 @@ export class AddSiteComponent implements OnInit {
     this.title.changeTitle('Añadir Sitio');
   }
 
-  fields: FormlyFieldConfig[] = siteFields;
+  fields: FormlyFieldConfig[] = fields;
 
   submit() {
     if (this.form.valid) {

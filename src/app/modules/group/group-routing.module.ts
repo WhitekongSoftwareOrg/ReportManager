@@ -7,8 +7,6 @@ import { GroupEditComponent } from './group-edit/group-edit.component';
 const routes: Routes = [
   {
     path: '',
-
-    // resolve: { siteList: SiteListResolver},
     children: [
       {
         path: '',
