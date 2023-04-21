@@ -48,11 +48,16 @@ export const APP_PRIMENG_MODULE = [
   AvatarModule,
   SkeletonModule,
   ConfirmDialogModule,
-  ToastModule
+  ToastModule,
+  InputTextModule,
+  CheckboxModule,
+  FormsModule,
 
 ];
 export const APP_PRIMENG_COMPONENTS = [Dialog, ConfirmDialog, Header, Footer];
 import { ConfirmationService } from 'primeng/api';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 export const APP_PRIMENG_PROVIDERS = [ConfirmationService, MessageService, ConfirmationService];
 

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routerOptions: ExtraOptions = {
   anchorScrolling: 'enabled',
@@ -11,8 +12,15 @@ const routerOptions: ExtraOptions = {
 
 const routes: Routes = [
   {
+    path: 'login',
+    loadChildren: () => {
+      return import('./auth/auth.module').then((m) => m.AuthModule);
+    },
+  },
+  {
     path: '',
     component: AppLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
