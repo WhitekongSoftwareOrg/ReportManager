@@ -13,7 +13,11 @@ import {
 } from './shared/formly/validator-msg/validator-msg';
 import { FormlyFieldFile } from './shared/components/file-type/file-type.component';
 import { SharedModule } from './shared/shared.module';
-
+import { ApiModule, BASE_PATH } from './shared/services/swagger';
+import { environment } from 'src/environments/environment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -21,6 +25,8 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     AppLayoutModule,
     SharedModule,
+    ApiModule,
+    ProgressSpinnerModule,
     FormlyModule.forRoot({
       types: [{ name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] }],
       validationMessages: [
@@ -32,7 +38,14 @@ import { SharedModule } from './shared/shared.module';
       ],
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: BASE_PATH , useValue: environment.url},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

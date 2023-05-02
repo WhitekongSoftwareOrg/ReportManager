@@ -25,6 +25,7 @@
           pInputText
           class="w-full md:w-25rem"
           placeholder="Email"
+          [(ngModel)]="email"
         />
       </span>
       <span class="p-input-icon-left w-full mb-4">
@@ -35,6 +36,7 @@
           pInputText
           class="w-full md:w-25rem"
           placeholder="Contraseña"
+          [(ngModel)]="password"
         />
       </span>
       <div class="mb-4 flex flex-wrap gap-3">
@@ -61,7 +63,7 @@
         pRipple
         label="Iniciar sesión"
         class="w-full"
-        (click)="login({ email: 's', password: 's' })"
+        (click)="login()"
       ></button>
     </div>
   </div>

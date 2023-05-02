@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
@@ -9,11 +8,12 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 })
 export class LoginComponent {
   rememberMe: boolean = false;
+  email!: string;
+  password!: string;
 
-  constructor( private auth: AuthService) {}
+  constructor(private auth: AuthService) { }
 
-  login(loginData: { email: string; password: string }): void {
-    this.auth.login(loginData);
+  login(): void {
+    this.auth.login({ email: this.email, password: this.password });
   }
-
 }
