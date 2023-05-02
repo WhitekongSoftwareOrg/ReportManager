@@ -18,6 +18,7 @@ import { environment } from 'src/environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -43,6 +44,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
       multi: true
     }
   ],

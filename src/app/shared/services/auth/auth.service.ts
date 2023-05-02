@@ -10,7 +10,6 @@ export class AuthService {
   private token?: string;
 
   constructor(
-    private mock: auth,
     private router: Router,
     private auth: authService
   ) {}
@@ -43,9 +42,11 @@ export class AuthService {
 
   setToken(token: string): void {
     this.token = token;
+    localStorage.setItem('ctk-token', token)
   }
 
   isAllow(): boolean {
-    return !!this.token;
+    const token = localStorage.getItem('ctk-token');
+    return !!token && token !== "";
   }
 }

@@ -6,6 +6,7 @@ import {
   MessageService,
 } from 'primeng/api';
 import { SiteMockService } from 'src/app/core/mock/sites.mock';
+import { CentralsService } from 'src/app/shared/services/swagger';
 import { TitleService } from 'src/app/shared/services/title.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class SiteListComponent implements OnInit {
 
   constructor(
     private title: TitleService,
-    private siteMock: SiteMockService,
+    private centralsService: CentralsService,
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
@@ -29,7 +30,8 @@ export class SiteListComponent implements OnInit {
 
   ngOnInit(): void {
     this.title.changeTitle('Sitios');
-    this.siteMock.getSites().subscribe((data) => {
+    this.centralsService.apiCentralsGet().subscribe((data) => {
+      console.log(data)
       this.sites = data;
     });
   }
