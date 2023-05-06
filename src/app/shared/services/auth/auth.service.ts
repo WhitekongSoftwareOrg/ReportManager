@@ -16,18 +16,17 @@ export class AuthService {
 
   login(loginData: { email: string; password: string }): void {
     const { email, password } = loginData;
-    console.log(email, password)
     this.auth.apiAuthLoginPost({
       password,
       usuario: email
     }).subscribe( res => {
-      if (res?.token) {        
+      if (res?.token) {
         this.setToken(res.token);
         this.router.navigate(['/']);
       }
     }, error => {
       if (error.status === 401) {
-        alert('Usuario/Contraseña incorrecto')  
+        alert('Usuario/Contraseña incorrecto')
       }
 
       alert('Ha ocurrido un error' + error)

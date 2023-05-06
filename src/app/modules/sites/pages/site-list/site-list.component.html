@@ -4,36 +4,23 @@
   </div>
 </div>
 
-<p-table dataKey="id" [scrollable]="true" [value]="sites" [showCurrentPageReport]="true"
-  [currentPageReportTemplate]="getCurrentPageTemplate()" [rowsPerPageOptions]="[10, 20, 30, 50]"
-  (onPage)="updateRowsInTable($event)" [sortField]="'centralCode'" (onSort)="onSort($event)" [sortOrder]="-1"
-  [loading]="!sites.length ? true : false" [globalFilterFields]="['centralCode']">
+<p-table dataKey="id" [scrollable]="true" [value]="tableHelper.list" [showCurrentPageReport]="true"
+  [currentPageReportTemplate]="tableHelper.getCurrentPageTemplate()" [rowsPerPageOptions]="[10, 20, 30, 50]"
+  (onPage)="tableHelper.updateRowsInTable($event)" [sortField]="'centralCode'" (onSort)="tableHelper.onSort($event)" [sortOrder]="-1"
+  [loading]="!tableHelper.list.length ? true : false" [globalFilterFields]="['centralCode']">
   <ng-template pTemplate="header">
     <tr>
       <th style="max-width: 5em">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th  class="column-with-filter">
-        <span pSortableColumn="centralCode">
-          Sitio <p-sortIcon field="centralCode"></p-sortIcon>
-        </span>
-        <input type="text" pInputText [(ngModel)]="filter.centralCode" />
-      </th>
-      <th pSortableColumn="centralDescription">
-        Descripción <p-sortIcon field="centralDescription"></p-sortIcon>
-      </th>
-      <th pSortableColumn="centralCity">
-        Ciudad <p-sortIcon field="centralCity"></p-sortIcon>
-      </th>
-      <th pSortableColumn="centralRegion">
-        Región <p-sortIcon field="centralRegion"></p-sortIcon>
-      </th>
-      <th pSortableColumn="centralCountry">
-        País <p-sortIcon field="centralCountry"></p-sortIcon>
-      </th>
-      <th pSortableColumn="centralParentId">
-        PadreId <p-sortIcon field="centralParentId"></p-sortIcon>
-      </th>
+      <ng-container *ngFor="let column of tableHelper.columns">
+        <th class="column-with-filter">
+          <span pSortableColumn="centralCode">
+            {{column.label}} <p-sortIcon [field]="column.name"></p-sortIcon>
+          </span>
+          <input type="text" pInputText [(ngModel)]="tableHelper.filter[column.name]" />
+        </th>
+      </ng-container>
       <th>
         Actions
       </th>
@@ -44,12 +31,9 @@
       <td style="max-width: 5em">
         <p-tableCheckbox [value]="site"></p-tableCheckbox>
       </td>
-      <td>{{ site.centralCode }}</td>
-      <td>{{ site.centralDescription }}</td>
-      <td>{{ site.centralCity }}</td>
-      <td>{{ site.centralRegion }}</td>
-      <td>{{ site.centralCountry }}</td>
-      <td>{{ site.centralParentId }}</td>
+      <ng-container *ngFor="let column of tableHelper.columns">
+        <td>{{ site[column.name] }}</td>
+      </ng-container>
       <td class="flex gap-2">
         <p-button (click)="open(site.id)" icon="pi pi-pencil"></p-button>
         <p-button (click)="delete(site)" icon="pi pi-trash" styleClass="p-button-danger"></p-button>
@@ -64,7 +48,7 @@
     </tr>
   </ng-template>
 </p-table>
-<p-paginator (onPageChange)="onPageChange($event)" [first]="actualFirst" [rows]="count" [totalRecords]="count"
+<p-paginator (onPageChange)="tableHelper.onPageChange($event)" [first]="tableHelper.actualFirst" [rows]="tableHelper.count" [totalRecords]="tableHelper.count"
   [rowsPerPageOptions]="[10, 20, 30]">
 </p-paginator>
 

@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ConfirmEventType,
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
-import { Central, CentralsService } from 'src/app/shared/services/swagger';
+import { TableHelper } from 'src/app/shared/helpers/table.helper';
+import { CentralsService } from 'src/app/shared/services/swagger';
 import { TitleService } from 'src/app/shared/services/title.service';
 
 @Component({
@@ -14,59 +15,55 @@ import { TitleService } from 'src/app/shared/services/title.service';
   styleUrls: ['./site-list.component.scss'],
 })
 export class SiteListComponent implements OnInit {
-  sites: Central[] = [];
-  selectedSites: any[] = [];
-  numResultsDisplayed: number = 10;
-  actualFirst = 0;
-
-  count = 0;
-  skip = 0;
-  take = 10;
-  orderBy = undefined;
-  orderDirection = 'ASC';
-  centralId = undefined;
-  centralRegion = undefined;
-  centralCountry = undefined;
-  centralParentId = undefined;
-  centralCode = undefined;
-  centralCity = undefined;
-
-  filter = {
-    centralCode: ""
-  };
+  tableHelper!: TableHelper;
 
   constructor(
     private title: TitleService,
     private centralsService: CentralsService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
-  ) { }
+    private messageService: MessageService,
+    private ngZone: NgZone
+  ) {
+    this.tableHelper = new TableHelper(
+      [
+        {
+          label: 'Sitio',
+          name: 'centralCode',
+          sortable: true
+        },
+        {
+          label: 'Descripción',
+          name: 'centralDescription',
+          sortable: true
+        },
+        {
+          label: 'Ciudad',
+          name: 'centralCity',
+          sortable: true
+        },
+        {
+          label: 'Región',
+          name: 'centralRegion',
+          sortable: true
+        },
+        {
+          label: 'País',
+          name: 'centralCountry',
+          sortable: true
+        },
+        {
+          label: 'PadreId',
+          name: 'centralParentId',
+          sortable: true
+        }
+      ],
+      () => this.ngZone.run(() => this.centralsService.apiCentralsGet())
+    )
+  }
 
   ngOnInit(): void {
     this.title.changeTitle('Sitios');
-  }
-
-  getSites() {
-    this.centralsService.apiCentralsGet(
-      this.skip,
-      this.take,
-      this.orderBy,
-      this.orderDirection,
-      this.centralId,
-      this.centralCode,
-      this.centralCity,
-      this.centralRegion,
-      this.centralCountry,
-      this.centralParentId
-    ).subscribe((data) => {
-      this.sites = data.list || [];
-      this.count = data.count || 0;
-    });
-  }
-
-  getCurrentPageTemplate() {
-    return `${this.sites.length} de ${this.count}`;
   }
 
   open(id: string) {
@@ -109,24 +106,5 @@ export class SiteListComponent implements OnInit {
 
   add() {
     this.router.navigate(['/sites/add']);
-  }
-
-  updateRowsInTable(event: any) {
-    this.numResultsDisplayed = event.rows;
-    this.actualFirst = event.first;
-  }
-
-  onSort(event: any) {
-    if (event.field !== this.orderBy && event.order !== this.orderDirection) {
-      this.orderBy = event.field;
-      this.orderDirection = event.order === 1 ? 'ASC' : 'DESC';
-      this.getSites();
-    }
-  }
-
-  onPageChange(event: any) {
-    this.skip = event.page * event.rows;
-    this.take = event.rows;
-    this.getSites();
   }
 }
