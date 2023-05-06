@@ -2,46 +2,48 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 
 export const siteFields: FormlyFieldConfig[] = [
   {
-    key: 'sitio',
+    key: 'centralCode',
     type: 'input',
     props: {
       label: 'Sitio',
       required: true,
+      maxLength: 5,
     },
   },
   {
-    key: 'city',
+    key: 'centralCity',
     type: 'input',
     props: {
       label: 'Ciudad',
       required: true,
+      maxLength: 50,
     },
   },
   {
-    key: 'region',
+    key: 'centralRegion',
     type: 'input',
     props: {
       label: 'Región',
       required: true,
+      maxLength: 50,
     },
   },
   {
-    key: 'country',
-    type: 'input',
-    props: {
-      label: 'País',
-      required: true,
-    },
-  },
-
-  {
-    key: 'description',
+    key: 'centralDescription',
     type: 'textarea',
     props: {
       label: 'Descripción',
       required: true,
-      maxLength: 100,
-      rows: 5,
+      maxLength: 50,
+    },
+  },
+  {
+    key: 'centralCountry',
+    type: 'input',
+    props: {
+      label: 'País',
+      required: true,
+      maxLength: 50,
     },
   },
 ];

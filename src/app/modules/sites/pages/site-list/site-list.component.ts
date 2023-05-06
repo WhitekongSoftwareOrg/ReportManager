@@ -5,8 +5,7 @@ import {
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
-import { SiteMockService } from 'src/app/core/mock/sites.mock';
-import { CentralsService } from 'src/app/shared/services/swagger';
+import { Central, CentralsService } from 'src/app/shared/services/swagger';
 import { TitleService } from 'src/app/shared/services/title.service';
 
 @Component({
@@ -15,10 +14,26 @@ import { TitleService } from 'src/app/shared/services/title.service';
   styleUrls: ['./site-list.component.scss'],
 })
 export class SiteListComponent implements OnInit {
-  sites: any[] = [];
+  sites: Central[] = [];
   selectedSites: any[] = [];
   numResultsDisplayed: number = 10;
   actualFirst = 0;
+
+  count = 0;
+  skip = 0;
+  take = 10;
+  orderBy = undefined;
+  orderDirection = 'ASC';
+  centralId = undefined;
+  centralRegion = undefined;
+  centralCountry = undefined;
+  centralParentId = undefined;
+  centralCode = undefined;
+  centralCity = undefined;
+
+  filter = {
+    centralCode: ""
+  };
 
   constructor(
     private title: TitleService,
@@ -26,14 +41,32 @@ export class SiteListComponent implements OnInit {
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title.changeTitle('Sitios');
-    this.centralsService.apiCentralsGet().subscribe((data) => {
-      console.log(data)
-      this.sites = data;
+  }
+
+  getSites() {
+    this.centralsService.apiCentralsGet(
+      this.skip,
+      this.take,
+      this.orderBy,
+      this.orderDirection,
+      this.centralId,
+      this.centralCode,
+      this.centralCity,
+      this.centralRegion,
+      this.centralCountry,
+      this.centralParentId
+    ).subscribe((data) => {
+      this.sites = data.centrals || [];
+      this.count = data.count || 0;
     });
+  }
+
+  getCurrentPageTemplate() {
+    return `${this.sites.length} de ${this.count}`;
   }
 
   open(id: string) {
@@ -84,7 +117,16 @@ export class SiteListComponent implements OnInit {
   }
 
   onSort(event: any) {
-    console.log(event);
-    //API THINGS
+    if (event.field !== this.orderBy && event.order !== this.orderDirection) {
+      this.orderBy = event.field;
+      this.orderDirection = event.order === 1 ? 'ASC' : 'DESC';
+      this.getSites();
+    }
+  }
+
+  onPageChange(event: any) {
+    this.skip = event.page * event.rows;
+    this.take = event.rows;
+    this.getSites();
   }
 }

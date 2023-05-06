@@ -22,7 +22,8 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { SidebarModule } from 'primeng/sidebar';
 import { AvatarModule } from 'primeng/avatar';
 import { SkeletonModule } from 'primeng/skeleton';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { PaginatorModule } from 'primeng/paginator';
 
 export const APP_PRIMENG_MODULE = [
   SharedModule,
@@ -52,7 +53,7 @@ export const APP_PRIMENG_MODULE = [
   InputTextModule,
   CheckboxModule,
   FormsModule,
-
+  PaginatorModule,
 ];
 export const APP_PRIMENG_COMPONENTS = [Dialog, ConfirmDialog, Header, Footer];
 import { ConfirmationService } from 'primeng/api';
@@ -67,4 +68,4 @@ export const APP_PRIMENG_PROVIDERS = [ConfirmationService, MessageService, Confi
   exports: [APP_PRIMENG_MODULE],
   providers: [APP_PRIMENG_PROVIDERS],
 })
-export class PRIMENGModule {}
+export class PRIMENGModule { }

@@ -1,6 +1,7 @@
 export * from './anyType';
 export * from './central';
 export * from './configuration';
+export * from './listResponse';
 export * from './loginDTO';
 export * from './mailList';
 export * from './periodicity';

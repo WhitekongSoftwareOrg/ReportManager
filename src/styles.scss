@@ -17,6 +17,7 @@ formly-field {
   .p-inputtext {
     width: 100%;
   }
+
   .p-field {
     margin: 0;
     width: 100%;
@@ -37,4 +38,24 @@ button {
   border: none;
   border-radius: 30px;
   padding: 10px 20px;
+
+  &:disabled {
+    background-color: rgb(119, 135, 143);
+  }
+}
+
+button:disabled {
+  background-color: rgb(207, 207, 207);
+  border-radius: 6px;
+}
+
+.column-with-filter{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  .columnminwidth{
+    width: 100%;
+  }
 }

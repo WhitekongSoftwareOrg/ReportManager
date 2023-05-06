@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Central } from '../model/central';
+import { ListResponse } from '../model/listResponse';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -72,10 +73,10 @@ export class CentralsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: number, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Central>>;
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: number, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Central>>>;
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: number, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Central>>>;
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: number, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponse>;
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponse>>;
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponse>>;
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
 
@@ -147,7 +148,7 @@ export class CentralsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Central>>('get',`${this.basePath}/api/Centrals`,
+        return this.httpClient.request<ListResponse>('get',`${this.basePath}/api/Centrals`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
