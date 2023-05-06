@@ -18,7 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { Central } from '../model/central';
-import { ListResponse } from '../model/listResponse';
+import { ListResponseCentrals } from '../model/listResponseCentrals';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -73,9 +73,9 @@ export class CentralsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponse>;
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponse>>;
-    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponse>>;
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponseCentrals>;
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponseCentrals>>;
+    public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponseCentrals>>;
     public apiCentralsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, centralId?: number, centralCode?: string, centralDescription?: string, centralCity?: string, centralRegion?: string, centralCountry?: string, centralParentId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -148,7 +148,7 @@ export class CentralsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ListResponse>('get',`${this.basePath}/api/Centrals`,
+        return this.httpClient.request<ListResponseCentrals>('get',`${this.basePath}/api/Centrals`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -358,6 +358,58 @@ export class CentralsService {
         }
 
         return this.httpClient.request<Central>('post',`${this.basePath}/api/Centrals`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiCentralsRemoveByIdsPut(body?: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiCentralsRemoveByIdsPut(body?: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiCentralsRemoveByIdsPut(body?: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiCentralsRemoveByIdsPut(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('put',`${this.basePath}/api/Centrals/removeByIds`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

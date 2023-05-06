@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ListResponsePeriodicity } from '../model/listResponsePeriodicity';
 import { Periodicity } from '../model/periodicity';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -70,9 +71,9 @@ export class PeriodicitiesService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Periodicity>>;
-    public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Periodicity>>>;
-    public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Periodicity>>>;
+    public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponsePeriodicity>;
+    public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponsePeriodicity>>;
+    public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponsePeriodicity>>;
     public apiPeriodicitiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, periodicityId?: number, periodicityName?: string, periodicityDescription?: string, periodicityType?: number, periodicityQuantity?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -137,7 +138,7 @@ export class PeriodicitiesService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<Periodicity>>('get',`${this.basePath}/api/Periodicities`,
+        return this.httpClient.request<ListResponsePeriodicity>('get',`${this.basePath}/api/Periodicities`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -347,6 +348,58 @@ export class PeriodicitiesService {
         }
 
         return this.httpClient.request<Periodicity>('post',`${this.basePath}/api/Periodicities`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiPeriodicitiesRemoveByIdsPut(body?: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiPeriodicitiesRemoveByIdsPut(body?: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiPeriodicitiesRemoveByIdsPut(body?: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiPeriodicitiesRemoveByIdsPut(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('put',`${this.basePath}/api/Periodicities/removeByIds`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,

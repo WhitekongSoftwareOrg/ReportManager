@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ListResponseMailList } from '../model/listResponseMailList';
 import { MailList } from '../model/mailList';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -68,9 +69,9 @@ export class MailListsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<MailList>>;
-    public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<MailList>>>;
-    public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<MailList>>>;
+    public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe?: 'body', reportProgress?: boolean): Observable<ListResponseMailList>;
+    public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponseMailList>>;
+    public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponseMailList>>;
     public apiMailListsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, mailListId?: number, mailListName?: string, mailListAddresses?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -127,7 +128,7 @@ export class MailListsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<MailList>>('get',`${this.basePath}/api/MailLists`,
+        return this.httpClient.request<ListResponseMailList>('get',`${this.basePath}/api/MailLists`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -337,6 +338,58 @@ export class MailListsService {
         }
 
         return this.httpClient.request<MailList>('post',`${this.basePath}/api/MailLists`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * 
+     * 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public apiMailListsRemoveByIdsPut(body?: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public apiMailListsRemoveByIdsPut(body?: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public apiMailListsRemoveByIdsPut(body?: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public apiMailListsRemoveByIdsPut(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (Bearer) required
+        if (this.configuration.accessToken) {
+            const accessToken = typeof this.configuration.accessToken === 'function'
+                ? this.configuration.accessToken()
+                : this.configuration.accessToken;
+            headers = headers.set('Authorization', 'Bearer ' + accessToken);
+        }
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/_*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<any>('put',`${this.basePath}/api/MailLists/removeByIds`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
