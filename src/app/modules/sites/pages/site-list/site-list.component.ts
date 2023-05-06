@@ -60,7 +60,7 @@ export class SiteListComponent implements OnInit {
       this.centralCountry,
       this.centralParentId
     ).subscribe((data) => {
-      this.sites = data.centrals || [];
+      this.sites = data.list || [];
       this.count = data.count || 0;
     });
   }

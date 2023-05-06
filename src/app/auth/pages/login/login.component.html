@@ -26,6 +26,7 @@
           class="w-full md:w-25rem"
           placeholder="Email"
           [(ngModel)]="email"
+          (keyup.enter)="login()"
         />
       </span>
       <span class="p-input-icon-left w-full mb-4">
@@ -37,9 +38,10 @@
           class="w-full md:w-25rem"
           placeholder="Contraseña"
           [(ngModel)]="password"
+          (keyup.enter)="login()"
         />
       </span>
-      <div class="mb-4 flex flex-wrap gap-3">
+      <!-- <div class="mb-4 flex flex-wrap gap-3">
         <div>
           <p-checkbox
             name="checkbox"
@@ -57,7 +59,7 @@
           class="text-600 cursor-pointer hover:text-primary cursor-pointer ml-auto transition-colors transition-duration-300"
           >Recuperar contraseña</a
         >
-      </div>
+      </div> -->
       <button
         pButton
         pRipple
