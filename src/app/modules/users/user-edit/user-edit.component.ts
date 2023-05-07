@@ -3,8 +3,8 @@ import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserMockService as mock } from 'src/app/core/mock/users.mock';
-import { userFields as fields } from '../config/user.form';
+import { userFields as fields, userFields } from '../config/user.form';
+import { User, UserGroupService, UserService } from 'src/app/shared/services/swagger';
 
 @Component({
   selector: 'app-user-edit',
@@ -13,136 +13,62 @@ import { userFields as fields } from '../config/user.form';
 })
 export class UserEditComponent implements OnInit {
   id: string | number = '';
-  data: any = {};
+  data: User = {};
   form = new FormGroup({});
-  model: any = {};
+  model: User = {};
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = fields;
 
   constructor(
     private title: TitleService,
     private route: ActivatedRoute,
-    private mock: mock,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    private userGroupService: UserGroupService
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar usuario');
+    this.title.changeTitle('Editar Usuario');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });
 
-    this.mock.getUserById(this.id).subscribe((data) => {
-      this.data = data;
-    });
-    setTimeout(() => {
-      this.setData();
-    }, 200);
+    if (this.id) {
+      this.userService.apiUserIdGet(this.id as any).subscribe(res => {
+        this.data = res
+        this.userGroupService.apiUserGroupGet().subscribe(res => {
+          (fields.find((f: any) => f.key === 'userGroupId') as any).templateOptions.options =
+            (res as any).list.map((r: any) => ({ value: r.userGroupId, label: r.userGroupName }))
+
+          if ((res as any).list && (res as any).list[0]) {
+            this.model.userGroupId = (res as any).list[0].userGroupId
+          }
+
+          this.model.userRol = 'User';
+          this.form.patchValue(this.model)
+          this.setData();
+        })
+      })
+    }
   }
 
   setData() {
-    this.fields = [
+    this.fields = Object.keys(this.data).map((siteProp: any) => (
       {
-        key: 'name',
-        type: 'input',
-        defaultValue: this.data.name,
-        props: {
-          label: 'Sitio',
-          required: true,
-          cols: 12,
-        },
-      },
-      {
-        key: 'lastName',
-        type: 'input',
-        defaultValue: this.data.lastName,
-
-        props: {
-          label: 'Ciudad',
-          required: true,
-        },
-      },
-      {
-        key: 'login',
-        type: 'input',
-        defaultValue: this.data.login,
-        props: {
-          label: 'Login',
-          required: true,
-        },
-      },
-      {
-        key: 'password',
-        type: 'input',
-        defaultValue: this.data.password,
-        props: {
-          label: 'Contraseña',
-          required: true,
-        },
-      },
-
-      {
-        key: 'group',
-        type: 'select',
-        defaultValue: this.data.group,
-        templateOptions: {
-          label: 'Grupo',
-          required: true,
-          options: [
-            {
-              value: 'sales',
-              label: 'Ventas',
-            },
-            {
-              value: 'marketing',
-              label: 'Marketing',
-            },
-            {
-              value: 'development',
-              label: 'Desarrollo',
-            },
-            {
-              value: 'admon',
-              label: 'Administradores',
-            },
-          ],
-        },
-      },
-      {
-        key: 'role',
-        type: 'select',
-        defaultValue: this.data.role,
-        templateOptions: {
-          label: 'Rol',
-          required: true,
-          options: [
-            {
-              value: 'admin',
-              label: 'Administrador',
-            },
-            {
-              value: 'editor',
-              label: 'Editor',
-            },
-            {
-              value: 'user',
-              label: 'Usuario',
-            },
-            {
-              value: 'guest',
-              label: 'Invitado',
-            },
-          ],
-        },
-      },
-    ];
+        ...userFields.find((field: any) => field.key === siteProp),
+        defaultValue: (this.data as any)[siteProp]
+      }
+    ))
   }
 
   submit() {
     if (this.form.valid) {
-      alert(JSON.stringify(this.model));
+      this.userService.apiUserIdPut(this.id as any, {
+        ...this.form.value,
+        userId: this.id,
+      }).subscribe(res => {
+        this.router.navigate(['/users']);
+      }, error => alert('Ha ocurrido un error'))
     }
-    //DO API THINGS
-    this.router.navigate(['../']);
   }
 }

@@ -37,7 +37,7 @@ export class AddSiteComponent implements OnInit {
         centralCountry: this.model.centralCountry,
         centralDescription: this.model.centralDescription,
         centralId: this.model.centralId,
-        centralParentId: this.model.centralParentId,
+        // centralParentId: this.model.centralParentId,
         centralRegion: this.model.centralRegion
       }).subscribe(res => {
         this.router.navigate(['/sites']);

@@ -70,7 +70,7 @@ export class GenericTableComponent implements OnChanges {
   }
 
   removeAll() {
-    this.onRemoveRow.emit(this.selectedRows.map((row: any) => row[this.idColumn || '']))
+    this.onRemoveRow.emit(this.selectedRows.map((row: any) => row[this.idColumn || '']));
   }
 
   onFilter(columnName: string, event: any){
@@ -121,6 +121,7 @@ export class GenericTableComponent implements OnChanges {
   }
 
   delete(row?: any) {
+    let selected = 0;
     this.confirmationService.confirm({
       message: this.selectedRows && this.selectedRows.length > 1 ? this.removeMessageMultiple?.replace('{num}', this.selectedRows.length.toString()) : this.removeMessage || "",
       header: `¿Quieres elimiar ${this.selectedRows?.map((row: any) => row[this.nameColumn!]).join(',')}?`,
@@ -128,14 +129,18 @@ export class GenericTableComponent implements OnChanges {
       accept: () => {
         if (row && this) {
           this.selectedRows = [row];
+          selected = 1;
           this.removeAll();
+          this.selectedRows = [];
         } else {
+          selected = this.selectedRows?.length;
           this.removeAll();
+          this.selectedRows = [];
         }
         this.messageService.add({
           severity: 'info',
           summary: 'Éxito',
-          detail: `${this.selectedRows?.length} eliminado${this.selectedRows?.length ? 's' : ''}`,
+          detail: `${selected} eliminado${selected && selected > 1 ? 's' : ''}`,
         });
       },
       reject: (type: any) => {

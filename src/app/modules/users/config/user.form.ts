@@ -2,85 +2,65 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const userFields: FormlyFieldConfig[] = [
   {
-    key: 'name',
+    key: 'userName',
     type: 'input',
     props: {
       label: 'Nombre',
       required: true,
+      maxLength: 20,
     },
   },
   {
-    key: 'lastName',
+    key: 'userLastName',
     type: 'input',
     props: {
       label: 'Apellido',
       required: true,
+      maxLength: 20,
     },
   },
   {
-    key: 'login',
+    key: 'userLogin',
     type: 'input',
     props: {
       label: 'Login',
       required: true,
+      maxLength: 20,
     },
   },
   {
-    key: 'password',
+    key: 'userPass',
     type: 'input',
     props: {
+      type: 'password',
       label: 'Contraseña',
       required: true,
+      maxLength: 20,
     },
   },
   {
-    key: 'group',
+    key: 'userGroupId',
     type: 'select',
     templateOptions: {
       label: 'Grupo',
       required: true,
-      options: [
-        {
-          value: 'sales',
-          label: 'Ventas',
-        },
-        {
-          value: 'marketing',
-          label: 'Marketing',
-        },
-        {
-          value: 'development',
-          label: 'Desarrollo',
-        },
-        {
-          value: 'admon',
-          label: 'Administradores',
-        },
-      ],
+      options: [],
     },
   },
   {
-    key: 'role',
+    key: 'userRol',
     type: 'select',
     templateOptions: {
       label: 'Rol',
       required: true,
       options: [
         {
-          value: 'admin',
+          value: 'Admin',
           label: 'Administrador',
         },
         {
-          value: 'editor',
-          label: 'Editor',
-        },
-        {
-          value: 'user',
+          value: 'User',
           label: 'Usuario',
-        },
-        {
-          value: 'guest',
-          label: 'Invitado',
         },
       ],
     },

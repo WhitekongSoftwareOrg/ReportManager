@@ -46,12 +46,4 @@ export const siteFields: FormlyFieldConfig[] = [
       maxLength: 50,
     },
   },
-  {
-    key: 'centralParentId',
-    type: 'input',
-    props: {
-      label: 'ParentId',
-      required: false,
-    },
-  },
 ];
