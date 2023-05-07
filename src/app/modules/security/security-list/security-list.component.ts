@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import {
-  ConfirmEventType,
-  ConfirmationService,
-  MessageService,
-} from 'primeng/api';
-import { SecurityListMockService as mock } from 'src/app/core/mock/security.mocks';
+import { SecuritiesService } from 'src/app/shared/services/swagger';
 import { TitleService } from 'src/app/shared/services/title.service';
 @Component({
   selector: 'app-security-list',
@@ -13,75 +7,96 @@ import { TitleService } from 'src/app/shared/services/title.service';
   styleUrls: ['./security-list.component.scss'],
 })
 export class SecurityListComponent implements OnInit {
-  securityLists: any[] = [];
-  selectedSecurityLists: any[] = [];
-  numResultsDisplayed: number = 10;
-  actualFirst = 0;
+  loading = false;
+  columns = [
+    {
+      label: 'Nombre Usuario Windows',
+      name: 'windowsIdentityUserName',
+      sortable: true
+    },
+    {
+      label: 'Nombre Grupo Windows',
+      name: 'windowsIdentityGroupName',
+      sortable: true
+    },
+    {
+      label: 'Rol',
+      name: 'roleId',
+      sortable: true
+    },
+    {
+      label: 'Grupo',
+      name: 'securityUserGroupId',
+      sortable: true
+    },
+    {
+      label: 'Sitio',
+      name: 'centralId',
+      sortable: true
+    },
+  ];
+
+  mapRol: any = {
+    1: 'Usuario',
+    2: 'Validador',
+    3: 'Administrador',
+  }
+
+  count = 0;
+  list: any = [];
 
   constructor(
     private title: TitleService,
-    private securityListsMock: mock,
-    private router: Router,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService
-  ) {}
+    private securitiesService: SecuritiesService,
+  ) {
+  }
+
+  removeRows(event: any) {
+    this.loading = true;
+    this.securitiesService.apiSecuritiesRemoveByIdsPut(event).subscribe(() => {
+      this.securitiesService.apiSecuritiesGet(0, 10, 'securityId', 'DESC').subscribe((_res: any) => {
+        this.count = _res.count;
+        this.list = _res.list;
+        this.loading = false;
+      })
+    })
+  }
+
+  getList(event: any) {
+    this.loading = true;
+    this.securitiesService.apiSecuritiesGet(
+      event.skip,
+      event.take,
+      event.orderBy,
+      event.orderDirection,
+      event.filter.centralId,
+      event.filter.centralCode,
+      event.filter.centralDescription,
+      event.filter.centralCity,
+      event.filter.centralRegion,
+      event.filter.centralCountry,
+      event.filter.centralParentId
+    ).subscribe((res: any) => {
+      this.loading = false;
+      this.count = res.count;
+      this.list = res.list.map((item: any) => {
+        const userGroup = item.securityUserGroupId ? item.securityUserGroupId + '-' : '';
+        const centralId = item.centralId ? item.centralId + '-' : '';
+        const populatedGroup = res.populatedUserGroups.find((ug: any) => ug.userGroupId == item.securityUserGroupId);
+        const populatedCentral = res.populatedCentrals.find((ug: any) => ug.centralId == item.centralId)
+
+        return {
+          ...item,
+          securityUserGroupId: userGroup + (populatedGroup ? populatedGroup.userGroupName : 'All groups'),
+          centralId: centralId + (populatedCentral ? populatedCentral.centralCode : 'All centrals'),
+          roleId: this.mapRol[item.roleId]
+        }
+      }
+      )
+    })
+  }
 
   ngOnInit(): void {
     this.title.changeTitle('Entradas de seguridad');
-    this.securityListsMock.getSecurityList().subscribe((data) => (this.securityLists = data));
   }
-
-  open(id: string) {
-    this.router.navigate(['/security/edit/', id]);
-  }
-
-  delete(securityList: any) {
-    this.confirmationService.confirm({
-      message: 'Eliminarás esta lista de correo de forma permanente',
-      header: `¿Quieres elimiar ${securityList.name}?`,
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Éxito',
-          detail: `${securityList.name} eliminado`,
-        });
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Acción Rechazada',
-            });
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({
-              severity: 'warn',
-              summary: 'Cancelado',
-              detail: 'Acción cancelada',
-            });
-            break;
-        }
-      },
-      key: 'positionDialog',
-    });
-  }
-
-  add() {
-    this.router.navigate(['/security/add']);
-  }
-
-  updateRowsInTable(event: any) {
-    this.numResultsDisplayed = event.rows;
-    this.actualFirst = event.first;
-  }
-
-  onSort(event: any) {
-    console.log(event);
-    //API THINGS
-  }
-
-
 }

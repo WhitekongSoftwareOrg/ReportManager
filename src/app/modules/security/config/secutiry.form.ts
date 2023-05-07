@@ -2,101 +2,59 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const SecurityFields: FormlyFieldConfig[] = [
   {
-    key: 'name',
-    type: 'input',
-    props: {
-      label: 'Nombre',
-      required: true,
-    },
-  },
-  {
-    key: 'windowsName',
-    type: 'input',
-    props: {
-      label: 'Apellido',
-      required: true,
-    },
-  },
-  {
-    key: 'windowsGroup',
-    type: 'input',
-    props: {
-      label: 'Login',
-      required: true,
-    },
-  },
-  {
-    key: 'group',
+    key: 'userId',
     type: 'select',
-    templateOptions: {
-      label: 'Grupo',
-      required: true,
-      options: [
-        {
-          value: 'sales',
-          label: 'Ventas',
-        },
-        {
-          value: 'marketing',
-          label: 'Marketing',
-        },
-        {
-          value: 'development',
-          label: 'Desarrollo',
-        },
-        {
-          value: 'admon',
-          label: 'Administradores',
-        },
-      ],
+    props: {
+      label: 'Usuario',
+      options: []
     },
   },
   {
-    key: 'role',
+    key: 'windowsIdentityUserName',
+    type: 'input',
+    props: {
+      label: 'Nombre Usuario Windows',
+    },
+  },
+  {
+    key: 'windowsIdentityGroupName',
+    type: 'input',
+    props: {
+      label: 'Nombre Grupo Windows',
+    },
+  },
+  {
+    key: 'roleId',
     type: 'select',
-    templateOptions: {
+    props: {
       label: 'Rol',
-      required: true,
       options: [
         {
-          value: 'admin',
-          label: 'Administrador',
+          value: 1,
+          label: 'Usuario'
         },
         {
-          value: 'editor',
-          label: 'Editor',
-        },
-        {
-          value: 'user',
-          label: 'Usuario',
-        },
-        {
-          value: 'guest',
-          label: 'Invitado',
-        },
+          value: 2,
+          label: 'Validador'
+        }
       ],
     },
   },
   {
-    key: 'site',
+    key: 'securityUserGroupId',
+    type: 'select',
+    templateOptions: {
+      label: 'Nombre Grupo',
+      options: [],
+    },
+  },
+  {
+    key: 'centralId',
     type: 'select',
     templateOptions: {
       label: 'Sitio',
       required: true,
-      options: [
-        {
-          value: 'Sitio1',
-          label: 'site1',
-        },
-        {
-          value: 'Sitio2',
-          label: 'site2',
-        },
-        {
-          value: 'Sitio3',
-          label: 'site3',
-        },
-      ],
+      options: [],
     },
   },
 ];
