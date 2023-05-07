@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
 import { CentralsService } from 'src/app/shared/services/swagger';
 import { TitleService } from 'src/app/shared/services/title.service';
 

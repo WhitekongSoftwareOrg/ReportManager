@@ -9,6 +9,7 @@ import { ComponentsModule } from './components/components.module';
 import { PRIMENGModule } from './prime-ng/prime-ng.module';
 import { FileValueAccessor } from './directives/file-value-accessor.directive';
 import { FormlyFieldFile } from './components/file-type/file-type.component';
+import { FormlyChips } from './components/chips/chips.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { FormlyFieldFile } from './components/file-type/file-type.component';
     FormlyInputModule,
     ComponentsModule,
     PRIMENGModule,
-    FormlyDatepickerModule,
+    FormlyDatepickerModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -31,8 +32,8 @@ import { FormlyFieldFile } from './components/file-type/file-type.component';
     ComponentsModule,
     PRIMENGModule,
     FileValueAccessor,
-
+    FormlyChips
   ],
-  declarations: [FileValueAccessor, FormlyFieldFile],
+  declarations: [FileValueAccessor, FormlyFieldFile, FormlyChips],
 })
 export class SharedModule {}

@@ -26,6 +26,7 @@ import { ToastModule } from 'primeng/toast';
 import { PaginatorModule } from 'primeng/paginator';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenuModule } from 'primeng/menu';
+import { ChipsModule } from 'primeng/chips';
 
 export const APP_PRIMENG_MODULE = [
   SharedModule,
@@ -57,7 +58,8 @@ export const APP_PRIMENG_MODULE = [
   FormsModule,
   PaginatorModule,
   OverlayPanelModule,
-  MenuModule
+  MenuModule,
+  ChipsModule
 ];
 export const APP_PRIMENG_COMPONENTS = [Dialog, ConfirmDialog, Header, Footer];
 import { ConfirmationService } from 'primeng/api';

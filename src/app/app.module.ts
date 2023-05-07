@@ -12,6 +12,7 @@ import {
   minValidationMessage,
 } from './shared/formly/validator-msg/validator-msg';
 import { FormlyFieldFile } from './shared/components/file-type/file-type.component';
+import { FormlyChips } from './shared/components/chips/chips.component';
 import { SharedModule } from './shared/shared.module';
 import { ApiModule, BASE_PATH } from './shared/services/swagger';
 import { environment } from 'src/environments/environment';
@@ -29,7 +30,8 @@ import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
     ApiModule,
     ProgressSpinnerModule,
     FormlyModule.forRoot({
-      types: [{ name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] }],
+      types: [{ name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
+      { name: 'chips', component: FormlyChips, wrappers: ['form-field'] }],
       validationMessages: [
         { name: 'required', message: 'Campo requerido' },
         { name: 'minLength', message: minLengthValidationMessage },
