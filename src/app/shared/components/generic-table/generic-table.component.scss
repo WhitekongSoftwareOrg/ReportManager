@@ -1,0 +1,27 @@
+:host {
+  ::ng-deep {
+    .p-datatable .p-datatable-thead > tr > th {
+      border-left: 0.2px solid rgb(238, 238, 238) !important;
+      border-right: 0.2px solid rgb(238, 238, 238) !important;
+      &:first-child{
+        border-left: none !important;
+      }
+
+      &:last-child{
+        border-right: none !important;
+      }
+    }
+
+    .p-datatable .p-datatable-tbody > tr > td {
+      border-left: 0.2px solid rgb(245, 245, 245) !important;
+      border-right: 0.2px solid rgb(245, 245, 245) !important;
+      &:first-child{
+        border-left: none !important;
+      }
+
+      &:last-child{
+        border-right: none !important;
+      }
+    }
+  }
+}

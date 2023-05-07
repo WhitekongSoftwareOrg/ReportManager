@@ -3,7 +3,7 @@
     <p-button (click)="add()" icon="pi pi-plus" [label]="'Añadir nuevo'" class="h-2rem w-2rem"></p-button>
   </div>
   <div *ngIf="selectedRows?.length">
-    <p-button (click)="delete()" icon="pi pi-trash" [label]="'Borrar'" class="h-2rem w-2rem"
+    <p-button (click)="delete()" icon="pi pi-trash" [label]="'Borrar ' + selectedRows.length" class="h-2rem w-2rem"
       styleClass="p-button-danger"></p-button>
   </div>
 </div>
@@ -11,7 +11,7 @@
   [showCurrentPageReport]="true" [currentPageReportTemplate]="getCurrentPageTemplate()"
   [rowsPerPageOptions]="[10, 20, 30, 50]" (onPage)="updateRowsInTable($event)"
   [sortField]="idColumn" (onSort)="onSort($event)" [sortOrder]="-1" [rowHover]="true"
-  [loading]="!list.length ? true : false" [globalFilterFields]="['centralCode']"
+  [loading]="loading"
   [(selection)]="selectedRows">
   <ng-template pTemplate="header">
     <tr>
@@ -23,7 +23,7 @@
           <span [pSortableColumn]="column.name">
             {{column.label}} <p-sortIcon [field]="column.name"></p-sortIcon>
           </span>
-          <input class="table-filter-input" type="text" pInputText [(ngModel)]="filter[column.name]" />
+          <input class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.name, $event)" [(ngModel)]="filter[column.name]" />
         </th>
       </ng-container>
       <th>
@@ -48,7 +48,7 @@
   <ng-template pTemplate="emptymessage">
     <tr>
       <td class="p-d-flex p-align-center p-justify-center">
-        No hay sitios para mostrar
+        {{noContentToShow}}
       </td>
     </tr>
   </ng-template>

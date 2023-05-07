@@ -23,8 +23,10 @@ export class GenericTableComponent implements OnChanges {
   @Input() idColumn?: string;
   @Input() nameColumn?: string;
   @Input() columns: Column[] = [];
+  @Input() loading: boolean = false;
   @Input() count = 0;
   @Input() list!: any;
+  @Input() noContentToShow!: string;
 
   selectedSites: any[] = [];
   selectedRows: any[] = [];
@@ -65,6 +67,20 @@ export class GenericTableComponent implements OnChanges {
 
   removeAll() {
     this.onRemoveRow.emit(this.selectedRows.map((row: any) => row[this.idColumn || '']))
+  }
+
+  onFilter(columnName: string, event: any){
+    const filter = {...this.filter};
+    filter[columnName] = event;
+
+    this.onGetList.emit({
+      filter,
+      count: this.count,
+      skip: this.skip,
+      take: this.take,
+      orderBy: this.orderBy,
+      orderDirection: this.orderDirection,
+    });
   }
 
   onSort(event: any) {

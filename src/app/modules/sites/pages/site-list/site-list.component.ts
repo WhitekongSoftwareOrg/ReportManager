@@ -9,6 +9,7 @@ import { TitleService } from 'src/app/shared/services/title.service';
   styleUrls: ['./site-list.component.scss'],
 })
 export class SiteListComponent implements OnInit {
+  loading = false;
   columns = [
     {
       label: 'Sitio',
@@ -52,15 +53,18 @@ export class SiteListComponent implements OnInit {
   }
 
   removeRows(event: any) {
+    this.loading = true;
     this.centralsService.apiCentralsRemoveByIdsPut(event).subscribe(() => {
       this.centralsService.apiCentralsGet(0, 10, 'centralId', 'DESC').subscribe((_res: any) => {
         this.count = _res.count;
         this.list = _res.list;
+        this.loading = false;
       })
     })
   }
 
   getList(event: any) {
+    this.loading = true;
     this.centralsService.apiCentralsGet(
       event.skip,
       event.take,
@@ -74,6 +78,7 @@ export class SiteListComponent implements OnInit {
       event.filter.centralCountry,
       event.filter.centralParentId
     ).subscribe((res: any) => {
+      this.loading = false;
       this.count = res.count;
       this.list = res.list;
     })
