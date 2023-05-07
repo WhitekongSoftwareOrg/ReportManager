@@ -3,8 +3,8 @@ import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TypeMockService as mock } from 'src/app/core/mock/type.mock';
-import { typeFields as fields } from '../../config/type.form';
+import { typeFields as fields, typeFields } from '../../config/type.form';
+import { PeriodicitiesService, Periodicity } from 'src/app/shared/services/swagger';
 
 @Component({
   selector: 'app-type-edit',
@@ -13,7 +13,7 @@ import { typeFields as fields } from '../../config/type.form';
 })
 export class TypeEditComponent implements OnInit {
   id: string | number = '';
-  data: any = {};
+  data: Periodicity = {};
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
@@ -22,92 +22,41 @@ export class TypeEditComponent implements OnInit {
   constructor(
     private title: TitleService,
     private route: ActivatedRoute,
-    private mock: mock,
+    private periodicitiesService: PeriodicitiesService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar usuario');
+    this.title.changeTitle('Editar Periodicidad');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });
 
-    this.mock.getTypeById(this.id).subscribe((data) => {
-      this.data = data;
-    });
-    setTimeout(() => {
-      this.setData();
-    }, 200);
+    if (this.id) {
+      this.periodicitiesService.apiPeriodicitiesIdGet(this.id as any).subscribe(res => {
+        this.data = res
+        this.setData();
+      })
+    }
   }
 
   setData() {
-    this.fields = [
+    this.fields = Object.keys(this.data).map((siteProp: any) => (
       {
-        key: 'name',
-        type: 'input',
-        defaultValue: this.data.name,
-        props: {
-          label: 'Peridiocidad',
-          required: true,
-        },
-      },
-      {
-        key: 'amount',
-        defaultValue: this.data.amount,
-        type: 'input',
-        props: {
-          label: 'Cantidad',
-          type: 'number',
-          required: true,
-          allowedKeys: '[0-9]',
-        },
-      },
-      {
-        key: 'type',
-        type: 'radio',
-        defaultValue: this.data.type,
-        templateOptions: {
-          label: 'Radio',
-          required: true,
-          options: [
-            {
-              value: 'daily',
-              label: 'Diario',
-            },
-            {
-              value: 'weekly',
-              label: 'Semanal',
-            },
-            {
-              value: 'mountly',
-              label: 'Mensual',
-            },
-            {
-              value: 'yearly',
-              label: 'Anual',
-            },
-          ],
-        },
-      },
-      {
-        key: 'description',
-        defaultValue: this.data.description,
-        type: 'textarea',
-        props: {
-          label: 'Descripción',
-          required: true,
-          maxLength: 100,
-          rows: 5,
-        },
-      },
-    ];
+        ...typeFields.find((field: any) => field.key === siteProp),
+        defaultValue: (this.data as any)[siteProp]
+      }
+    ))
   }
 
   submit() {
     if (this.form.valid) {
-      alert(JSON.stringify(this.model));
+      this.periodicitiesService.apiPeriodicitiesIdPut(this.id as any, {
+        ...this.form.value,
+        periodicityId: this.id,
+      }).subscribe(res => {
+        this.router.navigate(['/types']);
+      }, error => alert('Ha ocurrido un error'))
     }
-    //DO API THINGS
-    this.router.navigate(['../']);
   }
 }

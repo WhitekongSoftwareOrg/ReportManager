@@ -2,7 +2,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const typeFields: FormlyFieldConfig[] = [
   {
-    key: 'name',
+    key: 'periodicityName',
     type: 'input',
     props: {
       label: 'Peridiocidad',
@@ -10,7 +10,7 @@ export const typeFields: FormlyFieldConfig[] = [
     },
   },
   {
-    key: 'amount',
+    key: 'periodicityQuantity',
     type: 'input',
     props: {
       label: 'Cantidad',
@@ -20,33 +20,33 @@ export const typeFields: FormlyFieldConfig[] = [
     },
   },
   {
-    key: 'type',
+    key: 'periodicityType',
     type: 'radio',
     templateOptions: {
-      label: 'Radio',
+      label: 'Tipo',
       required: true,
       options: [
         {
-          value: 'daily',
+          value: 1,
           label: 'Diario',
         },
         {
-          value: 'weekly',
+          value: 2,
           label: 'Semanal',
         },
         {
-          value: 'mountly',
+          value: 3,
           label: 'Mensual',
         },
         {
-          value: 'yearly',
+          value: 4,
           label: 'Anual',
         },
       ],
     },
   },
   {
-    key: 'description',
+    key: 'periodicityDescription',
     type: 'textarea',
     props: {
       label: 'Descripción',
