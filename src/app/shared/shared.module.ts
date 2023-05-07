@@ -20,7 +20,6 @@ import { FormlyFieldFile } from './components/file-type/file-type.component';
     ComponentsModule,
     PRIMENGModule,
     FormlyDatepickerModule,
-    FormlyInputModule
   ],
   exports: [
     ReactiveFormsModule,

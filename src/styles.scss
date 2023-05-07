@@ -59,3 +59,22 @@ button:disabled {
     width: 100%;
   }
 }
+
+p-table th, p-table td {
+  &:first-child{
+    max-width: 50px;
+    p-tableheadercheckbox {
+      margin-top: 30px;
+    }
+  }
+}
+
+.table-filter-input{
+  max-width: 100px;
+}
+
+.table-button-header{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
