@@ -54,6 +54,10 @@ export class GenericTableComponent implements OnChanges {
   }
 
   getCurrentPageTemplate() {
+    if (!this.list) {
+      return '';
+    }
+
     return `${this.list.length} de ${this.count}`;
   }
 

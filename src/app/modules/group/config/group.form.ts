@@ -2,20 +2,21 @@ import { FormlyFieldConfig } from "@ngx-formly/core";
 
 export const groupFields: FormlyFieldConfig[] = [
   {
-    key: 'name',
+    key: 'userGroupName',
     type: 'input',
     props: {
       label: 'Grupo',
       required: true,
+      maxLength: 20,
     },
   },
   {
-    key: 'description',
+    key: 'userGroupDescription',
     type: 'textarea',
     props: {
       label: 'Descripción',
       required: true,
-      maxLength: 100,
+      maxLength: 50,
       rows: 5,
     },
   },

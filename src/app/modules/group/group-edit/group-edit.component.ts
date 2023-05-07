@@ -3,8 +3,8 @@ import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GroupsMockService as mock } from 'src/app/core/mock/groups.mock';
-import { groupFields as fields } from '../config/group.form';
+import { groupFields as fields, groupFields } from '../config/group.form';
+import { UserGroup, UserGroupService } from 'src/app/shared/services/swagger';
 
 @Component({
   selector: 'app-group-edit',
@@ -13,7 +13,7 @@ import { groupFields as fields } from '../config/group.form';
 })
 export class GroupEditComponent implements OnInit {
   id: string | number = '';
-  group: any = {};
+  group: UserGroup = {};
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
@@ -21,58 +21,42 @@ export class GroupEditComponent implements OnInit {
 
   constructor(
     private title: TitleService,
-    private mock: mock,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private userGroupService: UserGroupService
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar grupo');
-
+    this.title.changeTitle('Editar Sitio');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });
 
-    this.mock.getGroupsById(this.id).subscribe((data) => {
-      this.group = data;
-    });
-
-    setTimeout(() => {
-      this.setData();
-    }, 500);
+    if (this.id) {
+      this.userGroupService.apiUserGroupIdGet(this.id as any).subscribe(res => {
+        this.group = res
+        this.setData();
+      })
+    }
   }
 
   setData() {
-    this.fields = [
+    this.fields = Object.keys(this.group).map((groupProp: any) => (
       {
-        key: 'name',
-        type: 'input',
-        defaultValue: this.group.name,
-        props: {
-          label: 'Grupo',
-          required: true,
-          cols: 12,
-        },
-      },
-      {
-        key: 'description',
-        type: 'textarea',
-        defaultValue: this.group.description,
-        props: {
-          label: 'Descripción',
-          required: true,
-          maxLength: 100,
-          rows: 5,
-        },
-      },
-    ];
+        ...groupFields.find((field: any) => field.key === groupProp),
+        defaultValue: (this.group as any)[groupProp]
+      }
+    ))
   }
 
   submit() {
     if (this.form.valid) {
-      alert(JSON.stringify(this.model));
+      this.userGroupService.apiUserGroupIdPut(this.id as any, {
+        ...this.form.value,
+        userGroupId: this.id,
+      }).subscribe(res => {
+        this.router.navigate(['/groups']);
+      }, error => alert('Ha ocurrido un error'))
     }
-    //DO API THINGS
-    this.router.navigate(['../']);
   }
 }
