@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { SiteMockService as mock } from 'src/app/core/mock/sites.mock';
-import { siteFields as fields } from '../config/site.form';
+import { ActivatedRoute, Router } from '@angular/router';
+import { siteFields as fields, siteFields } from '../config/site.form';
+import { Central, CentralsService } from 'src/app/shared/services/swagger';
 
 @Component({
   selector: 'app-edit-site',
@@ -13,7 +13,7 @@ import { siteFields as fields } from '../config/site.form';
 })
 export class EditSiteComponent implements OnInit {
   id: string | number = '';
-  site: any = {};
+  site: Central = {};
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
@@ -22,84 +22,41 @@ export class EditSiteComponent implements OnInit {
   constructor(
     private title: TitleService,
     private route: ActivatedRoute,
-    private mock: mock,
-    private router: Router
+    private router: Router,
+    private centralService: CentralsService
   ) {}
 
   ngOnInit(): void {
     this.title.changeTitle('Editar Sitio');
     this.route.params.subscribe((params: any) => {
-      this.id = params.id - 1;
+      this.id = params.id;
     });
 
-    this.mock.getSitesById(this.id).subscribe((data) => {
-      this.site = data;
-    });
-    setTimeout(() => {
-      this.setData();
-    }, 200);
+    if (this.id) {
+      this.centralService.apiCentralsIdGet(this.id as any).subscribe(res => {
+        this.site = res
+        this.setData();
+      })
+    }
   }
 
   setData() {
-    this.fields = [
+    this.fields = Object.keys(this.site).map((siteProp: any) => (
       {
-        key: 'name',
-        type: 'input',
-        defaultValue: this.site.name,
-        props: {
-          label: 'Sitio',
-          required: true,
-          cols: 12,
-        },
-      },
-      {
-        key: 'city',
-        type: 'input',
-        defaultValue: this.site.city,
-
-        props: {
-          label: 'Ciudad',
-          required: true,
-        },
-      },
-      {
-        key: 'region',
-        type: 'input',
-        defaultValue: this.site.region,
-        props: {
-          label: 'Región',
-          required: true,
-        },
-      },
-      {
-        key: 'country',
-        type: 'input',
-        defaultValue: this.site.country,
-        props: {
-          label: 'País',
-          required: true,
-        },
-      },
-
-      {
-        key: 'description',
-        type: 'textarea',
-        defaultValue: this.site.description,
-        props: {
-          label: 'Descripción',
-          required: true,
-          maxLength: 100,
-          rows: 5,
-        },
-      },
-    ];
+        ...siteFields.find((field: any) => field.key === siteProp),
+        defaultValue: (this.site as any)[siteProp]
+      }
+    ))
   }
 
   submit() {
     if (this.form.valid) {
-      alert(JSON.stringify(this.model));
+      this.centralService.apiCentralsIdPut(this.id as any, {
+        ...this.form.value,
+        centralId: this.id,
+      }).subscribe(res => {
+        this.router.navigate(['../']);
+      }, error => alert('Ha ocurrido un error'))
     }
-    //DO API THINGS
-    this.router.navigate(['../']);
   }
 }
