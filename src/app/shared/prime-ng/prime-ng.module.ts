@@ -24,6 +24,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ToastModule } from 'primeng/toast';
 import { PaginatorModule } from 'primeng/paginator';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { MenuModule } from 'primeng/menu';
 
 export const APP_PRIMENG_MODULE = [
   SharedModule,
@@ -54,6 +56,8 @@ export const APP_PRIMENG_MODULE = [
   CheckboxModule,
   FormsModule,
   PaginatorModule,
+  OverlayPanelModule,
+  MenuModule
 ];
 export const APP_PRIMENG_COMPONENTS = [Dialog, ConfirmDialog, Header, Footer];
 import { ConfirmationService } from 'primeng/api';
