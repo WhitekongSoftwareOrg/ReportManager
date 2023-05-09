@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ListResponseUserGroups } from '../model/listResponseUserGroups';
 import { UserGroup } from '../model/userGroup';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -68,9 +69,9 @@ export class UserGroupService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe?: 'body', reportProgress?: boolean): Observable<Array<UserGroup>>;
-    public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserGroup>>>;
-    public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserGroup>>>;
+    public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponseUserGroups>;
+    public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponseUserGroups>>;
+    public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponseUserGroups>>;
     public apiUserGroupGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, userGroupName?: string, userGroupDescription?: string, userGroupId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
 
@@ -127,7 +128,7 @@ export class UserGroupService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<UserGroup>>('get',`${this.basePath}/api/UserGroup`,
+        return this.httpClient.request<ListResponseUserGroups>('get',`${this.basePath}/api/UserGroup`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

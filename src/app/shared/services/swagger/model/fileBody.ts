@@ -9,9 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Central } from './central';
 
-export interface ListResponse { 
-    centrals?: Array<Central>;
-    count?: number;
+export interface FileBody { 
+    file?: Blob;
 }

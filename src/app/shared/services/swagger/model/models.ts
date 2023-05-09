@@ -1,6 +1,7 @@
 export * from './anyType';
 export * from './central';
 export * from './configuration';
+export * from './fileBody';
 export * from './listResponseCentrals';
 export * from './listResponseConfigurations';
 export * from './listResponseMailList';
@@ -8,6 +9,7 @@ export * from './listResponsePeriodicity';
 export * from './listResponseReportState';
 export * from './listResponseReports';
 export * from './listResponseSecurity';
+export * from './listResponseUserGroups';
 export * from './listResponseUsers';
 export * from './loginDTO';
 export * from './mailList';

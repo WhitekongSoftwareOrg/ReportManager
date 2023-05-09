@@ -9,13 +9,9 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Central } from './central';
-import { Security } from './security';
 import { UserGroup } from './userGroup';
 
-export interface ListResponseSecurity { 
-    list?: Array<Security>;
+export interface ListResponseUserGroups { 
+    list?: Array<UserGroup>;
     count?: number;
-    populatedUserGroups?: Array<UserGroup>;
-    populatedCentrals?: Array<Central>;
 }

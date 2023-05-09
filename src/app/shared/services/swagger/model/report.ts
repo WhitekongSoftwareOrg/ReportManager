@@ -9,7 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AnyType } from './anyType';
 
 export interface Report { 
     reportId?: number;
@@ -22,7 +21,7 @@ export interface Report {
     reportExcelFileName?: string;
     centralId?: number;
     reportAdminNote?: string;
-    reportValidationRequired?: string;
+    reportValidationRequired?: boolean;
     reportOpRange?: string;
     reportExecHour?: number;
     mailListId?: number;
@@ -34,5 +33,5 @@ export interface Report {
     revisionMailListId?: number;
     reportPostExecutionExcelMacro?: string;
     reportPreExecutionExcelMacro?: string;
-    reportDeleted?: AnyType;
+    reportDeleted?: boolean;
 }
