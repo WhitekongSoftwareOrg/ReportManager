@@ -7,6 +7,7 @@ export const reportFields: FormlyFieldConfig[] = [
     props: {
       label: 'Nombre',
       required: true,
+      maxLength: 40
     },
   },
   {
@@ -15,6 +16,7 @@ export const reportFields: FormlyFieldConfig[] = [
     props: {
       label: 'Descripción',
       required: true,
+      maxLength: 200
     },
   },
   {
@@ -84,6 +86,7 @@ export const reportFields: FormlyFieldConfig[] = [
     props: {
       label: 'Celda de la fecha',
       required: true,
+      maxLength: 40
     },
   },
   {
@@ -92,6 +95,7 @@ export const reportFields: FormlyFieldConfig[] = [
     props: {
       label: 'Nombre del fichero',
       required: true,
+      maxLength: 100
     },
   },
   {
@@ -106,6 +110,7 @@ export const reportFields: FormlyFieldConfig[] = [
     key: 'reportPreExecutionExcelMacro',
     type: 'input',
     props: {
+      maxLength: 120,
       label: 'Macro Excel a ejecutar antes del cálculo del informe',
     },
   },
@@ -113,6 +118,7 @@ export const reportFields: FormlyFieldConfig[] = [
     key: 'reportPostExecutionExcelMacro',
     type: 'input',
     props: {
+      maxLength: 120,
       label: 'Macro Excel a ejecutar tras el cálculo del informe',
     },
   },
@@ -121,6 +127,7 @@ export const reportFields: FormlyFieldConfig[] = [
     type: 'input',
     defaultValue: '${ReportName} - ${Date}',
     props: {
+      maxLength: 3072,
       label: 'Formato de nombre notificaciones',
       required: true,
     },
@@ -133,6 +140,7 @@ export const reportFields: FormlyFieldConfig[] = [
       hide: 'true',
     },
     props: {
+      maxLength: 3072,
       label: '',
       required: true,
       hidden: true
@@ -142,6 +150,7 @@ export const reportFields: FormlyFieldConfig[] = [
     key: 'reportAdminNote',
     type: 'textarea',
     props: {
+      maxLength: 200,
       label: 'Notas',
     },
   },
@@ -156,6 +165,7 @@ export const reportFields: FormlyFieldConfig[] = [
     key: 'reportOpRange',
     type: 'input',
     props: {
+      maxLength: 100,
       label: 'Rango para comentarios del operador',
     },
   },

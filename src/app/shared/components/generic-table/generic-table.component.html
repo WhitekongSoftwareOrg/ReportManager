@@ -17,14 +17,14 @@
       </th>
       <ng-container *ngFor="let column of columns">
         <th class="column-with-filter">
-          <span [pSortableColumn]="column.name">
-            {{column.label}} <p-sortIcon [field]="column.name"></p-sortIcon>
+          <span [pSortableColumn]="column.filterName || column.name">
+            {{column.label}} <p-sortIcon [field]="column.filterName || column.name"></p-sortIcon>
           </span>
 
-          <p-calendar *ngIf="dateFilters.includes(column.name);else normalInput" appendTo="body"
-          (onSelect)="onFilter(column.name, $event)"></p-calendar>
+          <p-calendar *ngIf="dateFilters.includes(column.filterName || column.name);else normalInput" appendTo="body"
+          (onSelect)="onFilter(column.filterName || column.name, $event)"></p-calendar>
           <ng-template #normalInput>
-            <input class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.name, $event)"
+            <input class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.filterName ||column.name, $event)"
               [(ngModel)]="filter[column.name]" />
           </ng-template>
         </th>

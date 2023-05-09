@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { reportFields as fields, reportFields } from '../config/report.forms';
+import { reportFields as fields } from '../config/report.forms';
 import { Router } from '@angular/router';
-import { CentralsService, MailList, MailListsService, Report, ReportsService, UserGroupService, UserService } from 'src/app/shared/services/swagger';
+import { CentralsService, MailListsService, Report, ReportsService, UserGroupService, UserService } from 'src/app/shared/services/swagger';
 
 @Component({
   selector: 'app-report-add',
@@ -66,9 +66,16 @@ export class ReportAddComponent implements OnInit {
     })
   }
 
+  getParasedDate(date: Date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T00:00:00Z`;
+  }
   submit() {
     if (this.form.valid) {
       let nextDate: Date = new Date(this.model.reportFirstDate as any);
+      nextDate.setHours(0, 0, 0, 0);
       const newxtDateMethods: any = {
         1: (date: Date, days: number) => {
           date.setDate(date.getDate() + days);
@@ -85,20 +92,32 @@ export class ReportAddComponent implements OnInit {
       };
 
       nextDate = newxtDateMethods[this.model.periodicityId || 1](nextDate, 1);
+      this.reportsService.filePostForm(new File(
+        [this.form.value.file[0]],
+        this.model.reportExcelFileName || '',
+        { type: this.form.value.file[0].type })).subscribe(res => {
+          if (res) {
 
-      this.reportsService.apiReportsPost({
-        ...this.model,
-        reportNextDate: nextDate,
-        reportNextUtcDate: new Date(Date.UTC(nextDate.getUTCFullYear(), nextDate.getUTCMonth(),
-        nextDate.getUTCDate(), nextDate.getUTCHours(),
-        nextDate.getUTCMinutes(), nextDate.getUTCSeconds())),
-        userId: Number.parseInt(localStorage.getItem('ctk-userid') || '0'),
-        reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}'
-      }).subscribe(res => {
-        this.router.navigate(['/reports']);
-      }, error => {
-        alert('Ha ocurrido un error durante la creación de informes')
-      })
+            this.reportsService.apiReportsPost({
+              ...this.model,
+              reportNextDate: this.getParasedDate(new Date(nextDate as any)) as any,
+              reportFirstDate: this.getParasedDate(new Date(this.model.reportFirstDate as any)) as any,
+              reportNextUtcDate: new Date(Date.UTC(nextDate.getUTCFullYear(), nextDate.getUTCMonth(),
+                nextDate.getUTCDate(), nextDate.getUTCHours(),
+                nextDate.getUTCMinutes(), nextDate.getUTCSeconds())),
+              userId: Number.parseInt(localStorage.getItem('ctk-userid') || '0'),
+              reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}'
+            }).subscribe(res => {
+              this.router.navigate(['/reports']);
+            }, error => {
+              alert('Ha ocurrido un error durante la creación de informes')
+            })
+          } else {
+            alert('Ha ocurrido un error al subir el fichero')
+          }
+        }, error => {
+          alert('Ha ocurrido un error al subir el fichero')
+        });
     }
   }
 }

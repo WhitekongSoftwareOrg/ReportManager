@@ -27,11 +27,13 @@ export class SecurityListComponent implements OnInit {
     {
       label: 'Grupo',
       name: 'securityUserGroupId',
+      filterName: 'securityUserGroupName',
       sortable: true
     },
     {
       label: 'Sitio',
       name: 'centralId',
+      filterName: 'centralName',
       sortable: true
     },
   ];

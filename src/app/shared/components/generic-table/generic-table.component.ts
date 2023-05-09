@@ -6,6 +6,7 @@ export interface Column {
   name: string,
   sortable: boolean,
   label: string
+  filterName?: string
 }
 
 @Component({
@@ -60,9 +61,9 @@ export class GenericTableComponent implements OnChanges {
           if (this.dateFilters.includes(key)) {
             const currentDate = new Date(item[key]);
             const year = currentDate.getFullYear();
-            const month = currentDate.getMonth().toString().padStart(2, '0');
+            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
             const day = currentDate.getDate().toString().padStart(2, '0');
-            item[key] = `${day}/${month}/${year}`;
+            item[key] = `${month}-${day}-${year}`;
           }
         })
       });
@@ -92,11 +93,7 @@ export class GenericTableComponent implements OnChanges {
   onFilter(columnName: string, event: any) {
     console.log(event)
     const filter = { ...this.filter };
-    if (this.dateFilters.includes(columnName)) {
-      event.setHours(0, 0, 0, 0)
-    } else {
-      filter[columnName] = event;
-    }
+    filter[columnName] = event;
 
     this.onGetList.emit({
       filter,
