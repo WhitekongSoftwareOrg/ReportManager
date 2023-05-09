@@ -20,6 +20,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
+import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -28,6 +35,13 @@ import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
     AppLayoutModule,
     SharedModule,
     ApiModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     ProgressSpinnerModule,
     FormlyModule.forRoot({
       types: [{ name: 'file', component: FormlyFieldFile, wrappers: ['form-field'] },
@@ -42,7 +56,7 @@ import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
     }),
   ],
   providers: [
-    { provide: BASE_PATH , useValue: environment.url},
+    { provide: BASE_PATH, useValue: environment.url },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,
@@ -56,4 +70,4 @@ import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

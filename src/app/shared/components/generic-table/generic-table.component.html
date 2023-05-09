@@ -8,11 +8,8 @@
   </div>
 </div>
 <p-table *ngIf="idColumn" [dataKey]="idColumn" [scrollable]="true" [value]="list"
-  [showCurrentPageReport]="true" [currentPageReportTemplate]="getCurrentPageTemplate()"
-  [rowsPerPageOptions]="[10, 20, 30, 50]" (onPage)="updateRowsInTable($event)"
-  [sortField]="idColumn" (onSort)="onSort($event)" [sortOrder]="-1" [rowHover]="true"
-  [loading]="loading"
-  [(selection)]="selectedRows">
+  [rowsPerPageOptions]="[10, 20, 30, 50]" (onPage)="updateRowsInTable($event)" [sortField]="idColumn"
+  (onSort)="onSort($event)" [sortOrder]="-1" [rowHover]="true" [loading]="loading" [(selection)]="selectedRows">
   <ng-template pTemplate="header">
     <tr>
       <th>
@@ -23,7 +20,13 @@
           <span [pSortableColumn]="column.name">
             {{column.label}} <p-sortIcon [field]="column.name"></p-sortIcon>
           </span>
-          <input class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.name, $event)" [(ngModel)]="filter[column.name]" />
+
+          <p-calendar *ngIf="dateFilters.includes(column.name);else normalInput" appendTo="body"
+          (onSelect)="onFilter(column.name, $event)"></p-calendar>
+          <ng-template #normalInput>
+            <input class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.name, $event)"
+              [(ngModel)]="filter[column.name]" />
+          </ng-template>
         </th>
       </ng-container>
       <th>
@@ -53,6 +56,7 @@
     </tr>
   </ng-template>
 </p-table>
-<p-paginator (onPageChange)="onPageChange($event)" [first]="actualFirst"
-  [rows]="count" [totalRecords]="count" [rowsPerPageOptions]="[10, 20, 30]">
+<p-paginator (onPageChange)="onPageChange($event)" [first]="actualFirst" [showCurrentPageReport]="true"
+  [currentPageReportTemplate]="getCurrentPageTemplate()" [first]="0" [rows]="list.length" [totalRecords]="count"
+  [rowsPerPageOptions]="[10, 20, 30]">
 </p-paginator>

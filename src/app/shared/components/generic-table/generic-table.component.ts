@@ -27,6 +27,7 @@ export class GenericTableComponent implements OnChanges {
   @Input() count = 0;
   @Input() list!: any;
   @Input() noContentToShow!: string;
+  @Input() dateFilters: string[] = [];
 
   selectedSites: any[] = [];
   selectedRows: any[] = [];
@@ -51,6 +52,21 @@ export class GenericTableComponent implements OnChanges {
         this.filter[column.name] = "";
       });
     }
+
+    const newList = (changes as any).list?.currentValue;
+    if (newList) {
+      newList.forEach((item: any) => {
+        Object.keys(item).forEach(key => {
+          if (this.dateFilters.includes(key)) {
+            const currentDate = new Date(item[key]);
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth().toString().padStart(2, '0');
+            const day = currentDate.getDate().toString().padStart(2, '0');
+            item[key] = `${day}/${month}/${year}`;
+          }
+        })
+      });
+    }
   }
 
   getCurrentPageTemplate() {
@@ -73,9 +89,14 @@ export class GenericTableComponent implements OnChanges {
     this.onRemoveRow.emit(this.selectedRows.map((row: any) => row[this.idColumn || '']));
   }
 
-  onFilter(columnName: string, event: any){
-    const filter = {...this.filter};
-    filter[columnName] = event;
+  onFilter(columnName: string, event: any) {
+    console.log(event)
+    const filter = { ...this.filter };
+    if (this.dateFilters.includes(columnName)) {
+      event.setHours(0, 0, 0, 0)
+    } else {
+      filter[columnName] = event;
+    }
 
     this.onGetList.emit({
       filter,
@@ -116,8 +137,8 @@ export class GenericTableComponent implements OnChanges {
   }
 
   updateRowsInTable(event: any) {
-    this.numResultsDisplayed = event.rows;
-    this.actualFirst = event.first;
+    // this.numResultsDisplayed = event.rows;
+    // this.actualFirst = event.first;
   }
 
   delete(row?: any) {
