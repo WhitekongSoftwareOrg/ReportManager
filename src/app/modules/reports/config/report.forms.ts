@@ -2,7 +2,7 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export const reportFields: FormlyFieldConfig[] = [
   {
-    key: 'name',
+    key: 'reportName',
     type: 'input',
     props: {
       label: 'Nombre',
@@ -10,84 +10,54 @@ export const reportFields: FormlyFieldConfig[] = [
     },
   },
   {
-    key: 'type',
-    type: 'radio',
-    templateOptions: {
-      label: 'Radio',
+    key: 'reportDescription',
+    type: 'textarea',
+    props: {
+      label: 'Descripción',
       required: true,
-      options: [
-        {
-          value: 'daily',
-          label: 'Diario',
-        },
-        {
-          value: 'weekly',
-          label: 'Semanal',
-        },
-        {
-          value: 'mountly',
-          label: 'Mensual',
-        },
-        {
-          value: 'yearly',
-          label: 'Anual',
-        },
-      ],
-    }},
-  {
-    key: 'site',
-    type: 'select',
-    templateOptions: {
-      label: 'Sitios',
-      required: true,
-      options: [
-        {
-          value: 'site1',
-          label: 'Sitio 1',
-        },
-        {
-          value: 'site2',
-          label: 'Sitio 2',
-        },
-        {
-          value: 'site3',
-          label: 'Sitio 3',
-        },
-        {
-          value: 'site4',
-          label: 'Sitio 4',
-        },
-      ],
     },
   },
   {
-    key: 'group',
+    key: 'centralId',
+    type: 'select',
+    templateOptions: {
+      label: 'Sitio',
+      required: true,
+      options: [],
+    }},
+  {
+    key: 'reportUserGroupId',
     type: 'select',
     templateOptions: {
       label: 'Grupo',
       required: true,
+      options: [],
+    },
+  },
+  {
+    key: 'periodicityId',
+    type: 'select',
+    templateOptions: {
+      label: 'Periodicidad',
+      required: true,
       options: [
         {
-          value: 'sales',
-          label: 'Ventas',
+          value: 1,
+          label: 'Daily',
         },
         {
-          value: 'marketing',
-          label: 'Marketing',
+          value: 2,
+          label: 'Monthly',
         },
         {
-          value: 'development',
-          label: 'Desarrollo',
-        },
-        {
-          value: 'admon',
-          label: 'Administradores',
+          value: 3,
+          label: 'Yearly',
         },
       ],
     },
   },
   {
-    key: 'first_execution',
+    key: 'reportFirstDate',
     type: 'datepicker',
     props: {
       label: 'Primera ejecución',
@@ -109,118 +79,212 @@ export const reportFields: FormlyFieldConfig[] = [
     },
   },
   {
-    key: 'date_cell',
-    type: 'datepicker',
+    key: 'reportDateCell',
+    type: 'input',
     props: {
       label: 'Celda de la fecha',
       required: true,
-      dateFormat: 'yy/mm/dd',
-      hourFormat: '24',
-      numberOfMonths: 1,
-      selectionMode: 'single',
-      readonlyInput: false,
-      showTime: false,
-      showButtonBar: true,
-      showIcon: true,
-      showOtherMonths: true,
-      selectOtherMonths: false,
-      monthNavigator: false,
-      yearNavigator: false,
-      yearRange: '2020:2030',
-      inline: false,
     },
   },
   {
-    key: 'file_name',
-    type: 'file',
+    key: 'reportExcelFileName',
+    type: 'input',
     props: {
       label: 'Nombre del fichero',
       required: true,
     },
   },
   {
-    key: 'macro_before',
+    key: 'file',
+    type: 'file',
+    props: {
+      label: 'Fichero',
+      required: true,
+    },
+  },
+  {
+    key: 'reportPreExecutionExcelMacro',
     type: 'input',
     props: {
       label: 'Macro Excel a ejecutar antes del cálculo del informe',
     },
   },
   {
-    key: 'macro_after',
+    key: 'reportPostExecutionExcelMacro',
     type: 'input',
     props: {
       label: 'Macro Excel a ejecutar tras el cálculo del informe',
     },
   },
   {
-    key: 'notification_format',
+    key: 'reportAttachedFileNameFormat',
     type: 'input',
+    defaultValue: '${ReportName} - ${Date}',
     props: {
       label: 'Formato de nombre notificaciones',
       required: true,
     },
   },
   {
-    key: 'description',
+    key: 'reportFileNameFormat',
     type: 'input',
+    defaultValue: '${ReportManager} - ${Date} - ${Id}',
+    expressions: {
+      hide: 'true',
+    },
+    props: {
+      label: '',
+      required: true,
+      hidden: true
+    },
+  },
+  {
+    key: 'reportAdminNote',
+    type: 'textarea',
     props: {
       label: 'Notas',
     },
   },
   {
-    key: 'validation_required',
+    key: 'reportValidationRequired',
     type: 'checkbox',
     props: {
       label: '¿Requiere validación?',
     },
   },
   {
-    key: 'comment_range',
+    key: 'reportOpRange',
     type: 'input',
     props: {
       label: 'Rango para comentarios del operador',
     },
   },
   {
-    key: 'execution_time',
-    type: 'datepicker',
-    props: {
-      label: 'Hora de ejecución (UTC)',
+    key: 'reportExecHour',
+    type: 'select',
+    templateOptions: {
+      label: 'Hora de ejecución',
       required: true,
-      dateFormat: 'yy/mm/dd',
-      hourFormat: '24',
-      numberOfMonths: 1,
-      selectionMode: 'single',
-      readonlyInput: false,
-      showTime: false,
-      showButtonBar: true,
-      showIcon: true,
-      showOtherMonths: true,
-      selectOtherMonths: false,
-      monthNavigator: false,
-      yearNavigator: false,
-      yearRange: '2020:2030',
-      inline: false,
+      options: [
+        {
+          value: '0',
+          label: '00:00',
+        },
+        {
+          value: 1,
+          label: '01:00',
+        },
+        {
+          value: 2,
+          label: '02:00',
+        },
+        {
+          value: 3,
+          label: '03:00',
+        },
+        {
+          value: 4,
+          label: '04:00',
+        },
+        {
+          value: 5,
+          label: '05:00',
+        },
+        {
+          value: 6,
+          label: '06:00',
+        },
+        {
+          value: 7,
+          label: '07:00',
+        },
+        {
+          value: 8,
+          label: '08:00',
+        },
+        {
+          value: 9,
+          label: '09:00',
+        },
+        {
+          value: 10,
+          label: '10:00',
+        },
+        {
+          value: 11,
+          label: '11:00',
+        },
+        {
+          value: 12,
+          label: '12:00',
+        },
+        {
+          value: 13,
+          label: '13:00',
+        },
+        {
+          value: 14,
+          label: '14:00',
+        },
+        {
+          value: 15,
+          label: '15:00',
+        },
+        {
+          value: 16,
+          label: '16:00',
+        },
+        {
+          value: 17,
+          label: '17:00',
+        },
+        {
+          value: 18,
+          label: '18:00',
+        },
+        {
+          value: 19,
+          label: '19:00',
+        },
+        {
+          value: 20,
+          label: '20:00',
+        },
+        {
+          value: 21,
+          label: '21:00',
+        },
+        {
+          value: 22,
+          label: '22:00',
+        },
+        {
+          value: 23,
+          label: '23:00',
+        },
+      ],
     },
   },
   {
-    key: 'email_list',
-    type: 'input',
+    key: 'mailListId',
+    type: 'select',
     props: {
       label: 'Lista de correo',
       required: true,
+      options: []
     },
   },
   {
-    key: 'review_list',
-    type: 'input',
+    key: 'revisionMailListId',
+    type: 'select',
     props: {
-      label: 'Lista de notificación de revisión',
+      label: 'Lista de correo',
       required: true,
+      options: []
     },
   },
   {
-    key: 'disabled',
+    key: 'reportDeleted',
     type: 'checkbox',
     props: {
       label: 'Deshabilitado',

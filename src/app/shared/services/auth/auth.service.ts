@@ -24,6 +24,7 @@ export class AuthService {
         this.setToken(res.token);
         console.log(res)
         localStorage.setItem('ctk-username', res.userName);
+        localStorage.setItem('ctk-userid', res.userId);
         localStorage.setItem('ctk-userlastname', res.userLastName)
         this.router.navigate(['/']);
       }

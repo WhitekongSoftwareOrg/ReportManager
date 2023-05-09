@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
     private loadingService: LoadingService,
     private config: PrimeNGConfig,
     private translateService: TranslateService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.loadingService.loading$.subscribe(res => this.loading = res);
@@ -28,6 +29,9 @@ export class AppComponent implements OnInit {
   translate(lang: string) {
     this.translateService.use(lang);
     this.translateService.get('primeng').subscribe(res => {
-      this.config.setTranslation(res)});
+      this.config.setTranslation(res)
+    });
   }
+
+
 }
