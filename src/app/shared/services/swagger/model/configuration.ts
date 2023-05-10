@@ -11,7 +11,7 @@
  */
 
 export interface ConfigurationBack {
-    configurationId?: number;
-    configurationKey?: string;
-    configurationValue?: string;
+  configurationId?: number;
+  configurationKey?: string;
+  configurationValue?: string;
 }

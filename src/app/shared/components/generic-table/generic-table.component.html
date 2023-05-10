@@ -17,16 +17,21 @@
       </th>
       <ng-container *ngFor="let column of columns">
         <th class="column-with-filter">
-          <span [pSortableColumn]="column.filterName || column.name">
-            {{column.label}} <p-sortIcon [field]="column.filterName || column.name"></p-sortIcon>
+          <span [pSortableColumn]="column.name">
+            {{column.label}} <p-sortIcon [field]="column.name"></p-sortIcon>
           </span>
 
-          <p-calendar *ngIf="dateFilters.includes(column.filterName || column.name);else normalInput" appendTo="body"
-          (onSelect)="onFilter(column.filterName || column.name, $event)"></p-calendar>
-          <ng-template #normalInput>
-            <input class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.filterName ||column.name, $event)"
-              [(ngModel)]="filter[column.name]" />
-          </ng-template>
+          <div class="filter">
+            <p-calendar *ngIf="dateFilters.includes(column.name);else normalInput" appendTo="body"
+            (onSelect)="onFilter(column.name, $event)"></p-calendar>
+            <ng-template #normalInput>
+              <p-dropdown appendTo="body" *ngIf="column.options" [options]="column.options" [(ngModel)]="filter[column.name]"
+              (ngModelChange)="onFilter(column.name, $event)"></p-dropdown>
+              <input  *ngIf="!column.options" class="table-filter-input" type="text" pInputText (ngModelChange)="onFilter(column.name, $event)"
+                [(ngModel)]="filter[column.filterName || column.name]" />
+            </ng-template>
+            <p-button *ngIf="filter[column.filterName || column.name]" (onClick)="clear(column.filterName || column.name)" icon="pi pi-times" styleClass="p-button-rounded p-button-danger p-button-text"></p-button>
+          </div>
         </th>
       </ng-container>
       <th>

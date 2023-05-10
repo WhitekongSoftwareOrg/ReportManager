@@ -6,7 +6,8 @@ export interface Column {
   name: string,
   sortable: boolean,
   label: string
-  filterName?: string
+  filterName?: string,
+  options?: any[]
 }
 
 @Component({
@@ -46,6 +47,19 @@ export class GenericTableComponent implements OnChanges {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
   ) { }
+
+  clear(property: string){
+    console.log
+    delete this.filter[property];
+    this.onGetList.emit({
+      filter: this.filter,
+      count: this.count,
+      skip: this.skip,
+      take: this.take,
+      orderBy: this.orderBy,
+      orderDirection: this.orderDirection,
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((this.columns as any)?.currentValue) {
@@ -91,9 +105,21 @@ export class GenericTableComponent implements OnChanges {
   }
 
   onFilter(columnName: string, event: any) {
-    console.log(event)
+    console.log(event, columnName)
+    const column: any = this.columns.find(c => c.name == columnName);
     const filter = { ...this.filter };
     filter[columnName] = event;
+
+    if (column && column.filterName) {
+      filter[column.filterName] = event;
+      delete filter[columnName];
+    }
+
+    Object.keys(filter).forEach(k => {
+      if(filter[k] === ''){
+        delete filter[k];
+      }
+    });
 
     this.onGetList.emit({
       filter,

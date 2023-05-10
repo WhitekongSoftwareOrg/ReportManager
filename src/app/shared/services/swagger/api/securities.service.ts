@@ -69,14 +69,18 @@ export class SecuritiesService {
      * @param windowsIdentityGroupName 
      * @param roleId 
      * @param centralId 
+     * @param centralName 
+     * @param securityUserGroupName 
      * @param securityUserGroupId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, securityUserGroupId?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponseSecurity>;
-    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, securityUserGroupId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponseSecurity>>;
-    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, securityUserGroupId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponseSecurity>>;
-    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, securityUserGroupId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, centralName?: string, securityUserGroupName?: string, securityUserGroupId?: number, observe?: 'body', reportProgress?: boolean): Observable<ListResponseSecurity>;
+    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, centralName?: string, securityUserGroupName?: string, securityUserGroupId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponseSecurity>>;
+    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, centralName?: string, securityUserGroupName?: string, securityUserGroupId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponseSecurity>>;
+    public apiSecuritiesGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, securityId?: number, userId?: number, windowsIdentityUserName?: string, windowsIdentityGroupName?: string, roleId?: number, centralId?: number, centralName?: string, securityUserGroupName?: string, securityUserGroupId?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+
 
 
 
@@ -119,6 +123,12 @@ export class SecuritiesService {
         }
         if (centralId !== undefined && centralId !== null) {
             queryParameters = queryParameters.set('centralId', <any>centralId);
+        }
+        if (centralName !== undefined && centralName !== null) {
+            queryParameters = queryParameters.set('centralName', <any>centralName);
+        }
+        if (securityUserGroupName !== undefined && securityUserGroupName !== null) {
+            queryParameters = queryParameters.set('securityUserGroupName', <any>securityUserGroupName);
         }
         if (securityUserGroupId !== undefined && securityUserGroupId !== null) {
             queryParameters = queryParameters.set('securityUserGroupId', <any>securityUserGroupId);

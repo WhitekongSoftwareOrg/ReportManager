@@ -22,7 +22,21 @@ export class SecurityListComponent implements OnInit {
     {
       label: 'Rol',
       name: 'roleId',
-      sortable: true
+      sortable: true,
+      options: [
+        {
+          value: 1,
+          label: 'Usuario',
+        },
+        {
+          value: 2,
+          label: 'Validador',
+        },
+        {
+          value: 3,
+          label: 'Administrador',
+        }
+      ]
     },
     {
       label: 'Grupo',
@@ -65,19 +79,22 @@ export class SecurityListComponent implements OnInit {
   }
 
   getList(event: any) {
+    console.log(event.filter)
     this.loading = true;
     this.securitiesService.apiSecuritiesGet(
       event.skip,
       event.take,
       event.orderBy,
       event.orderDirection,
-      event.filter.centralId,
-      event.filter.centralCode,
-      event.filter.centralDescription,
-      event.filter.centralCity,
-      event.filter.centralRegion,
-      event.filter.centralCountry,
-      event.filter.centralParentId
+      undefined,
+      undefined,
+      event.filter.windowsIdentityUserName,
+      event.filter.windowsIdentityGroupName,
+      event.filter.roleId,
+      undefined,
+      event.filter.centralName,
+      event.filter.securityUserGroupName,
+      event.filter.securityUserGroupId,
     ).subscribe((res: any) => {
       this.loading = false;
       this.count = res.count;
