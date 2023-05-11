@@ -9,24 +9,8 @@
       "Friday",
       "Saturday"
     ],
-    "dayNamesShort": [
-      "Sun",
-      "Mon",
-      "Tue",
-      "Wed",
-      "Thu",
-      "Fri",
-      "Sat"
-    ],
-    "dayNamesMin": [
-      "Su",
-      "Mo",
-      "Tu",
-      "We",
-      "Th",
-      "Fr",
-      "Sa"
-    ],
+    "dayNamesShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "dayNamesMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
     "monthNames": [
       "January",
       "February",
@@ -85,5 +69,11 @@
     "add-new": "Add new",
     "delete": "Delete",
     "actions": "Actions"
+  },
+  "group": {
+    "send": "Send",
+    "title-edit": "Edit Group",
+    "title-add": "Add Group",
+    "title": "Groups"
   }
 }

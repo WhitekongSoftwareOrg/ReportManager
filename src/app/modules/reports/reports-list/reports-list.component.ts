@@ -93,6 +93,6 @@ export class ReportsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.changeTitle('Informes');
+    this.title.changeTitle('report.title');
   }
 }

@@ -5,7 +5,7 @@ import { TitleService } from 'src/app/shared/services/title.service';
 @Component({
   selector: 'app-emails-list-list',
   templateUrl: './emails-list-list.component.html',
-  styleUrls: ['./emails-list-list.component.scss']
+  styleUrls: ['./emails-list-list.component.scss'],
 })
 export class EmailsListListComponent implements OnInit {
   loading = false;
@@ -13,12 +13,12 @@ export class EmailsListListComponent implements OnInit {
     {
       label: 'nombre',
       name: 'mailListName',
-      sortable: true
+      sortable: true,
     },
     {
       label: 'Direcciones',
       name: 'mailListAddresses',
-      sortable: true
+      sortable: true,
     },
   ];
 
@@ -27,39 +27,42 @@ export class EmailsListListComponent implements OnInit {
 
   constructor(
     private title: TitleService,
-    private mailListService: MailListsService,
-  ) {
-  }
+    private mailListService: MailListsService
+  ) {}
 
   removeRows(event: any) {
     this.loading = true;
     this.mailListService.apiMailListsRemoveByIdsPut(event).subscribe(() => {
-      this.mailListService.apiMailListsGet(0, 10, 'mailListId', 'DESC').subscribe((_res: any) => {
-        this.count = _res.count;
-        this.list = _res.list;
-        this.loading = false;
-      })
-    })
+      this.mailListService
+        .apiMailListsGet(0, 10, 'mailListId', 'DESC')
+        .subscribe((_res: any) => {
+          this.count = _res.count;
+          this.list = _res.list;
+          this.loading = false;
+        });
+    });
   }
 
   getList(event: any) {
     this.loading = true;
-    this.mailListService.apiMailListsGet(
-      event.skip,
-      event.take,
-      event.orderBy,
-      event.orderDirection,
-      undefined,
-      event.filter.mailListName,
-      event.filter.mailListAddresses
-    ).subscribe((res: any) => {
-      this.loading = false;
-      this.count = res.count;
-      this.list = res.list;
-    })
+    this.mailListService
+      .apiMailListsGet(
+        event.skip,
+        event.take,
+        event.orderBy,
+        event.orderDirection,
+        undefined,
+        event.filter.mailListName,
+        event.filter.mailListAddresses
+      )
+      .subscribe((res: any) => {
+        this.loading = false;
+        this.count = res.count;
+        this.list = res.list;
+      });
   }
 
   ngOnInit(): void {
-    this.title.changeTitle('Listas de correos');
+    this.title.changeTitle('email.title');
   }
 }

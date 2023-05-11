@@ -23,7 +23,7 @@ export class TypeAddComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Añadir tipo');
+    this.title.changeTitle('types.title-add');
   }
 
   fields: FormlyFieldConfig[] = typeFields;

@@ -74,24 +74,45 @@
     "no-content": "No hay informes para mostrar"
   },
   "group": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar sitio",
+    "title-add": "Añadir grupo",
+    "title": "Grupos"
   },
   "email": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar Lista de correos",
+    "title-add": "Añadir Lista de correos",
+    "title": "Lista de correos"
   },
   "report": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar Informe",
+    "title-add": "Añadir Informe",
+    "title": "Informes"
   },
   "security": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar entrada de seguridad",
+    "title-add": "Añadir entrada de seguridad",
+    "title": "Entradas de seguridad"
   },
   "sites": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar Sitio",
+    "title-add": "Añadir Sitio",
+    "title": "Sitios"
   },
   "types": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar Periodicidad",
+    "title-add": "Añadir Tipo",
+    "title": "Tipos"
   },
   "users": {
-    "send": "Enviar"
+    "send": "Enviar",
+    "title-edit": "Editar Usuario",
+    "title-add": "Añadir Usuario",
+    "title": "Usuarios"
   }
 }

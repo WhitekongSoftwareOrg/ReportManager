@@ -27,7 +27,7 @@ export class TypeEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar Periodicidad');
+    this.title.changeTitle('types.title-edit');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });

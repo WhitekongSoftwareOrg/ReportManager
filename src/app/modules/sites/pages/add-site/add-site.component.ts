@@ -24,7 +24,7 @@ export class AddSiteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title.changeTitle('Añadir Sitio');
+    this.title.changeTitle('sites.title-add');
   }
 
   fields: FormlyFieldConfig[] = fields;

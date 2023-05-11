@@ -13,12 +13,12 @@ export class GroupListComponent implements OnInit {
     {
       label: 'Nombre',
       name: 'userGroupName',
-      sortable: true
+      sortable: true,
     },
     {
       label: 'Descripción',
       name: 'userGroupDescription',
-      sortable: true
+      sortable: true,
     },
   ];
 
@@ -27,38 +27,41 @@ export class GroupListComponent implements OnInit {
 
   constructor(
     private title: TitleService,
-    private userGroupService: UserGroupService,
-  ) {
-  }
+    private userGroupService: UserGroupService
+  ) {}
 
   removeRows(event: any) {
     this.loading = true;
     this.userGroupService.apiUserGroupRemoveByIdsPut(event).subscribe(() => {
-      this.userGroupService.apiUserGroupGet(0, 10, 'userGroupId', 'DESC').subscribe((_res: any) => {
-        this.count = _res.count;
-        this.list = _res.list;
-        this.loading = false;
-      })
-    })
+      this.userGroupService
+        .apiUserGroupGet(0, 10, 'userGroupId', 'DESC')
+        .subscribe((_res: any) => {
+          this.count = _res.count;
+          this.list = _res.list;
+          this.loading = false;
+        });
+    });
   }
 
   getList(event: any) {
     this.loading = true;
-    this.userGroupService.apiUserGroupGet(
-      event.skip,
-      event.take,
-      event.orderBy,
-      event.orderDirection,
-      event.filter.userGroupName,
-      event.filter.userGroupDescription,
-    ).subscribe((res: any) => {
-      this.loading = false;
-      this.count = res.count;
-      this.list = res.list;
-    })
+    this.userGroupService
+      .apiUserGroupGet(
+        event.skip,
+        event.take,
+        event.orderBy,
+        event.orderDirection,
+        event.filter.userGroupName,
+        event.filter.userGroupDescription
+      )
+      .subscribe((res: any) => {
+        this.loading = false;
+        this.count = res.count;
+        this.list = res.list;
+      });
   }
 
   ngOnInit(): void {
-    this.title.changeTitle('Grupos');
+    this.title.changeTitle('group.title');
   }
 }

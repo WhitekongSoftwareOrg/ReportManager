@@ -27,7 +27,7 @@ export class ReportEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar grupo');
+    this.title.changeTitle('report.title-edit');
 
     this.route.params.subscribe((params: any) => {
       this.id = params.id;

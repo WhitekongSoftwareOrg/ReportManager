@@ -19,25 +19,30 @@ export class GroupAddComponent implements OnInit {
   constructor(
     private title: TitleService,
     private userGroupService: UserGroupService,
-    private router: Router,
-    ) {}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Añadir grupo');
+    this.title.changeTitle('group.title-add');
   }
 
   fields: FormlyFieldConfig[] = fields;
 
   submit() {
     if (this.form.valid) {
-      this.userGroupService.apiUserGroupPost({
-        userGroupDescription: this.model.userGroupDescription,
-        userGroupName: this.model.userGroupName,
-      }).subscribe(res => {
-        this.router.navigate(['/groups']);
-      }, error => {
-        alert('Ha ocurrido un error durante la creación de sitios')
-      })
+      this.userGroupService
+        .apiUserGroupPost({
+          userGroupDescription: this.model.userGroupDescription,
+          userGroupName: this.model.userGroupName,
+        })
+        .subscribe(
+          (res) => {
+            this.router.navigate(['/groups']);
+          },
+          (error) => {
+            alert('Ha ocurrido un error durante la creación de sitios');
+          }
+        );
     }
   }
 }

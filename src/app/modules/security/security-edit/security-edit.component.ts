@@ -31,7 +31,7 @@ export class SecurityEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar entrada de seguridad');
+    this.title.changeTitle('security.title-edit');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });

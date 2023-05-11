@@ -84,6 +84,6 @@ export class SiteListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.changeTitle('Sitios');
+    this.title.changeTitle('sites.title');
   }
 }

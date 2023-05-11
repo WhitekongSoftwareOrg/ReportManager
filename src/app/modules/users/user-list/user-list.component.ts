@@ -66,6 +66,6 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.changeTitle('Usuarios');
+    this.title.changeTitle('users.title');
   }
 }

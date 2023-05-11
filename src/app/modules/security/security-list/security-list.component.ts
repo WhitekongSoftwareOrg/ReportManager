@@ -116,6 +116,6 @@ export class SecurityListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.changeTitle('Entradas de seguridad');
+    this.title.changeTitle('security.title');
   }
 }

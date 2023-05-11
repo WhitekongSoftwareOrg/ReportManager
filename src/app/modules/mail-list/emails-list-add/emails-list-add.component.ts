@@ -23,7 +23,7 @@ export class EmailsListAddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title.changeTitle('Añadir Lista de correos');
+    this.title.changeTitle('email.title-add');
   }
 
   fields: FormlyFieldConfig[] = fields;

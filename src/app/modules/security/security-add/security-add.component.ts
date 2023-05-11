@@ -26,7 +26,7 @@ export class SecurityAddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.title.changeTitle('Añadir entrada de seguridad');
+    this.title.changeTitle('security.title-add');
     this.userGroupService.apiUserGroupGet().subscribe(res => {
       (fields.find((f: any) => f.key === 'securityUserGroupId') as any).templateOptions.options =
         (res as any).list.map((r: any) => ({ value: r.userGroupId, label: r.userGroupName }))

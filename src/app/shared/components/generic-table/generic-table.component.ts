@@ -1,13 +1,24 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import {
+  ConfirmEventType,
+  ConfirmationService,
+  MessageService,
+} from 'primeng/api';
 
 export interface Column {
-  name: string,
-  sortable: boolean,
-  label: string
-  filterName?: string,
-  options?: any[]
+  name: string;
+  sortable: boolean;
+  label: string;
+  filterName?: string;
+  options?: any[];
 }
 
 @Component({
@@ -45,11 +56,10 @@ export class GenericTableComponent implements OnChanges {
   constructor(
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-  ) { }
+    private messageService: MessageService
+  ) {}
 
-  clear(property: string){
-    console.log
+  clear(property: string) {
     delete this.filter[property];
     this.onGetList.emit({
       filter: this.filter,
@@ -64,22 +74,24 @@ export class GenericTableComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if ((this.columns as any)?.currentValue) {
       (this.columns as any).forEach((column: any) => {
-        this.filter[column.name] = "";
+        this.filter[column.name] = '';
       });
     }
 
     const newList = (changes as any).list?.currentValue;
     if (newList) {
       newList.forEach((item: any) => {
-        Object.keys(item).forEach(key => {
+        Object.keys(item).forEach((key) => {
           if (this.dateFilters.includes(key)) {
             const currentDate = new Date(item[key]);
             const year = currentDate.getFullYear();
-            const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            const month = (currentDate.getMonth() + 1)
+              .toString()
+              .padStart(2, '0');
             const day = currentDate.getDate().toString().padStart(2, '0');
             item[key] = `${month}-${day}-${year}`;
           }
-        })
+        });
       });
     }
   }
@@ -101,12 +113,13 @@ export class GenericTableComponent implements OnChanges {
   }
 
   removeAll() {
-    this.onRemoveRow.emit(this.selectedRows.map((row: any) => row[this.idColumn || '']));
+    this.onRemoveRow.emit(
+      this.selectedRows.map((row: any) => row[this.idColumn || ''])
+    );
   }
 
   onFilter(columnName: string, event: any) {
-    console.log(event, columnName)
-    const column: any = this.columns.find(c => c.name == columnName);
+    const column: any = this.columns.find((c) => c.name == columnName);
     const filter = { ...this.filter };
     filter[columnName] = event;
 
@@ -115,8 +128,8 @@ export class GenericTableComponent implements OnChanges {
       delete filter[columnName];
     }
 
-    Object.keys(filter).forEach(k => {
-      if(filter[k] === ''){
+    Object.keys(filter).forEach((k) => {
+      if (filter[k] === '') {
         delete filter[k];
       }
     });
@@ -167,8 +180,16 @@ export class GenericTableComponent implements OnChanges {
   delete(row?: any) {
     let selected = 0;
     this.confirmationService.confirm({
-      message: this.selectedRows && this.selectedRows.length > 1 ? this.removeMessageMultiple?.replace('{num}', this.selectedRows.length.toString()) : this.removeMessage || "",
-      header: `¿Quieres elimiar ${this.selectedRows?.map((row: any) => row[this.nameColumn!]).join(',')}?`,
+      message:
+        this.selectedRows && this.selectedRows.length > 1
+          ? this.removeMessageMultiple?.replace(
+              '{num}',
+              this.selectedRows.length.toString()
+            )
+          : this.removeMessage || '',
+      header: `¿Quieres elimiar ${this.selectedRows
+        ?.map((row: any) => row[this.nameColumn!])
+        .join(',')}?`,
       icon: 'pi pi-info-circle',
       accept: () => {
         if (row && this) {

@@ -27,7 +27,7 @@ export class EditSiteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar Sitio');
+    this.title.changeTitle('sites.title-edit');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });

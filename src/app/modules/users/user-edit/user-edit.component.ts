@@ -28,7 +28,7 @@ export class UserEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar Usuario');
+    this.title.changeTitle('users.title-add');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });

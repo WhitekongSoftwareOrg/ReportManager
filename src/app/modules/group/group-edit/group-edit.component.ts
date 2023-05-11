@@ -5,6 +5,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { groupFields as fields, groupFields } from '../config/group.form';
 import { UserGroup, UserGroupService } from 'src/app/shared/services/swagger';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-group-edit',
@@ -23,40 +24,47 @@ export class GroupEditComponent implements OnInit {
     private title: TitleService,
     private route: ActivatedRoute,
     private router: Router,
-    private userGroupService: UserGroupService
+    private userGroupService: UserGroupService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar Sitio');
+    this.title.changeTitle('group.title-edit');
+
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });
 
     if (this.id) {
-      this.userGroupService.apiUserGroupIdGet(this.id as any).subscribe(res => {
-        this.group = res
-        this.setData();
-      })
+      this.userGroupService
+        .apiUserGroupIdGet(this.id as any)
+        .subscribe((res) => {
+          this.group = res;
+          this.setData();
+        });
     }
   }
 
   setData() {
-    this.fields = Object.keys(this.group).map((groupProp: any) => (
-      {
-        ...groupFields.find((field: any) => field.key === groupProp),
-        defaultValue: (this.group as any)[groupProp]
-      }
-    ))
+    this.fields = Object.keys(this.group).map((groupProp: any) => ({
+      ...groupFields.find((field: any) => field.key === groupProp),
+      defaultValue: (this.group as any)[groupProp],
+    }));
   }
 
   submit() {
     if (this.form.valid) {
-      this.userGroupService.apiUserGroupIdPut(this.id as any, {
-        ...this.form.value,
-        userGroupId: this.id,
-      }).subscribe(res => {
-        this.router.navigate(['/groups']);
-      }, error => alert('Ha ocurrido un error'))
+      this.userGroupService
+        .apiUserGroupIdPut(this.id as any, {
+          ...this.form.value,
+          userGroupId: this.id,
+        })
+        .subscribe(
+          (res) => {
+            this.router.navigate(['/groups']);
+          },
+          (error) => alert('Ha ocurrido un error')
+        );
     }
   }
 }

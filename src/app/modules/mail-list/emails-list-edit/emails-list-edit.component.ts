@@ -27,7 +27,7 @@ export class EmailsListEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('Editar lista de correos');
+    this.title.changeTitle('email.title-edit');
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });
