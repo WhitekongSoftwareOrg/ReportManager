@@ -11,12 +11,12 @@ export class EmailsListListComponent implements OnInit {
   loading = false;
   columns = [
     {
-      label: 'nombre',
+      label: 'email.label.name',
       name: 'mailListName',
       sortable: true,
     },
     {
-      label: 'Direcciones',
+      label: 'email.label.directions',
       name: 'mailListAddresses',
       sortable: true,
     },
