@@ -12,7 +12,13 @@
   (onGetList)="getList($event)"
   (onRemoveRow)="removeRows($event)"
   [noContentToShow]="'No hay grupos para mostrar'"
-  ></app-generic-table>
-<p-confirmDialog [style]="{ width: '50vw' }" key="positionDialog" [position]="'top  '" [baseZIndex]="10000"
-  rejectButtonStyleClass="p-button-outlined"></p-confirmDialog>
+></app-generic-table>
+
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  key="positionDialog"
+  [position]="'top  '"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-outlined"
+></p-confirmDialog>
 <p-toast></p-toast>

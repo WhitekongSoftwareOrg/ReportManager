@@ -68,6 +68,30 @@
   "table": {
     "add-new": "Añadir nuevo",
     "delete": "Borrar",
-    "actions": "Acciones"
+    "actions": "Acciones",
+    "msg-remove": "Eliminarás este grupo de forma permanente",
+    "msg-multiple-remove": "Eliminarás {num} grupos de forma permanente",
+    "no-content": "No hay informes para mostrar"
+  },
+  "group": {
+    "send": "Enviar"
+  },
+  "email": {
+    "send": "Enviar"
+  },
+  "report": {
+    "send": "Enviar"
+  },
+  "security": {
+    "send": "Enviar"
+  },
+  "sites": {
+    "send": "Enviar"
+  },
+  "types": {
+    "send": "Enviar"
+  },
+  "users": {
+    "send": "Enviar"
   }
 }

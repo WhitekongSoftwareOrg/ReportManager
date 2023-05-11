@@ -5,5 +5,11 @@
     [options]="options"
     [form]="form"
   ></formly-form>
-  <button type="submit" class="btn btn-primary submit-button"  [disabled]="!this.form.valid"> Enviar </button>
+  <button
+    type="submit"
+    class="btn btn-primary submit-button"
+    [disabled]="!this.form.valid"
+  >
+    {{ "types.send" | translate }}
+  </button>
 </form>

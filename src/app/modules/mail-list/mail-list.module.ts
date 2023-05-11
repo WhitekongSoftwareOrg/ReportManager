@@ -7,17 +7,12 @@ import { EmailsListAddComponent } from './emails-list-add/emails-list-add.compon
 import { EmailsListEditComponent } from './emails-list-edit/emails-list-edit.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
 @NgModule({
   declarations: [
     EmailsListListComponent,
     EmailsListAddComponent,
-    EmailsListEditComponent
+    EmailsListEditComponent,
   ],
-  imports: [
-    CommonModule,
-    MailListRoutingModule,
-    SharedModule
-  ]
+  imports: [CommonModule, MailListRoutingModule, SharedModule],
 })
-export class MailListModule { }
+export class MailListModule {}
