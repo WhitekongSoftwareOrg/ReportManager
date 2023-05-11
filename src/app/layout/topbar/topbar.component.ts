@@ -1,21 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
+import { MenuItem, PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit {
   user = {
     name: localStorage.getItem('ctk-username'),
-    alias: localStorage.getItem('ctk-username')!.charAt(0) + localStorage.getItem('ctk-userlastname')!.charAt(0)
-  }
+    alias:
+      localStorage.getItem('ctk-username')!.charAt(0) +
+      localStorage.getItem('ctk-userlastname')!.charAt(0),
+  };
 
   items!: MenuItem[];
+  language = 'es';
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private translateService: TranslateService,
+  ) {}
 
   ngOnInit() {
     this.items = [
@@ -24,10 +31,14 @@ export class TopbarComponent implements OnInit {
         icon: 'pi pi-sign-out',
         command: () => {
           localStorage.clear();
-          this.router.navigate(['/login'])
-        }
-      }
+          this.router.navigate(['/login']);
+        },
+      },
     ];
   }
 
+  toggleLanguage() {
+    this.language = this.language === 'es' ? 'en' : 'es';
+    this.translateService.use(this.language);
+  }
 }

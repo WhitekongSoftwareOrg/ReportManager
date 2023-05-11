@@ -57,5 +57,33 @@
     ],
     "today": "Today",
     "weekHeader": "Wk"
+  },
+  "default": {
+    "ph-email": "Email",
+    "ph-pwd": "Password"
+  },
+  "login": {
+    "access": "Access",
+    "request": "Please, introduce your password",
+    "login": "Login"
+  },
+  "rec-pwd": {
+    "new-pwd": "New password",
+    "new-ph-pwd": "Introduce your new password",
+    "btn-cancel": "Cancel",
+    "btn-send": "Send"
+  },
+  "not-found": {
+    "error": "Oops!",
+    "not": "We haven't found the page you are looking for",
+    "return": "Return to sites"
+  },
+  "chips": {
+    "ph-chips": "Hint: a; b; c"
+  },
+  "table": {
+    "add-new": "Add new",
+    "delete": "Delete",
+    "actions": "Actions"
   }
 }

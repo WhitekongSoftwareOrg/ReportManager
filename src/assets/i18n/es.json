@@ -9,24 +9,8 @@
       "Viernes",
       "Sábado"
     ],
-    "dayNamesShort": [
-      "Dom",
-      "Lun",
-      "Mar",
-      "Mie",
-      "Jue",
-      "Vie",
-      "Sab"
-    ],
-    "dayNamesMin": [
-      "Do",
-      "Lu",
-      "Ma",
-      "Mi",
-      "Ju",
-      "Vi",
-      "Sa"
-    ],
+    "dayNamesShort": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+    "dayNamesMin": ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
     "monthNames": [
       "Enero",
       "Febrero",
@@ -57,5 +41,33 @@
     ],
     "today": "Today",
     "weekHeader": "Wk"
+  },
+  "default": {
+    "ph-email": "Email",
+    "ph-pwd": "Contraseña"
+  },
+  "login": {
+    "access": "Acceder",
+    "request": "Por favor, introduce tus credenciales",
+    "login": "Iniciar sesión"
+  },
+  "rec-pwd": {
+    "new-pwd": "Nueva contraseña",
+    "new-ph-pwd": "Introduce tu nueva contraseña",
+    "btn-cancel": "Cancelar",
+    "btn-send": "Enviar"
+  },
+  "not-found": {
+    "error": "Oops!",
+    "not": "No hemos encontrado lo que buscabas",
+    "return": "Volver al sites"
+  },
+  "chips": {
+    "ph-chips": "Pista: a; b; c"
+  },
+  "table": {
+    "add-new": "Añadir nuevo",
+    "delete": "Borrar",
+    "actions": "Acciones"
   }
 }

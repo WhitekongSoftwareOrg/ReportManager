@@ -9,13 +9,19 @@
   z-index: 5;
 }
 
-.user{
-  &__info{
+.user {
+  &__info {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     cursor: pointer;
-    }
   }
+}
 
+.lang {
+  cursor: pointer;
+  &:hover {
+    font-weight: 700;
+  }
+}
