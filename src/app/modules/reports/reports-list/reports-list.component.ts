@@ -11,27 +11,27 @@ export class ReportsListComponent implements OnInit {
   loading = false;
   columns = [
     {
-      label: 'Id',
+      label: 'report.label.id',
       name: 'reportId',
       sortable: true
     },
     {
-      label: 'Nombre',
+      label: 'report.label.name',
       name: 'reportName',
       sortable: true
     },
     {
-      label: 'Descripción',
+      label: 'report.label.description',
       name: 'reportDescription',
       sortable: true
     },
     {
-      label: 'Primera ejecución',
+      label: 'report.label.first-exec',
       name: 'reportFirstDate',
       sortable: true
     },
     {
-      label: 'Siguiente ejecución',
+      label: 'report.label.last-exec',
       name: 'reportNextDate',
       sortable: true
     }

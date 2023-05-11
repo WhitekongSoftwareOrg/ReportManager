@@ -75,7 +75,7 @@ export class EditSiteComponent implements OnInit {
   }
 
   rebuildFields() {
-    this.fields = this.fieldsTemplate.map((fild: any, index) => {
+    this.fields = this.fieldsTemplate.map((fild: any) => {
       if (!fild?.props?.label) {
         return;
       }

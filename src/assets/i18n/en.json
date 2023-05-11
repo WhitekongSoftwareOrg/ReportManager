@@ -68,12 +68,109 @@
   "table": {
     "add-new": "Add new",
     "delete": "Delete",
-    "actions": "Actions"
+    "actions": "Actions",
+    "msg-remove": "Eliminarás este Group de forma permanente",
+    "msg-multiple-remove": "Eliminarás {num} Groups de forma permanente",
+    "no-content": "No hay Reports para mostrar"
   },
   "group": {
     "send": "Send",
     "title-edit": "Edit Group",
     "title-add": "Add Group",
-    "title": "Groups"
+    "title": "Groups",
+    "error": "An error has occurred",
+    "label": {
+      "name": "Name",
+      "description": "Description"
+    }
+  },
+  "email": {
+    "send": "Send",
+    "title-edit": "Edit Email list",
+    "title-add": "Add Email list",
+    "title": "Email list",
+    "label": {
+      "name": "Name",
+      "directions": "Directions",
+      "list": "Email (Press 'enter' after each email)"
+    }
+  },
+  "report": {
+    "send": "Send",
+    "title-edit": "Edit Report",
+    "title-add": "Add Report",
+    "title": "Reports",
+    "label": {
+      "id": "Id",
+      "name": "Name",
+      "description": "Description",
+      "first-exec": "First execution",
+      "last-exec": "Next execution"
+    }
+  },
+  "security": {
+    "send": "Send",
+    "title-edit": "Edit Security entry",
+    "title-add": "Add Security entry",
+    "title": "Security entries",
+    "label": {
+      "name-user": "Name User Windows",
+      "name-group": "Name Group Windows",
+      "rol": {
+        "label": "Rol",
+        "user": "User",
+        "validator": "Validator",
+        "admin": "Administrator"
+      },
+      "group": "Group",
+      "site": "Site"
+    }
+  },
+  "sites": {
+    "send": "Send",
+    "title-edit": "Edit Site",
+    "title-add": "Add Site",
+    "title": "Sites",
+    "label": {
+      "name": "Name",
+      "description": "Description",
+      "centralCode": "Site",
+      "city": "City",
+      "region": "Region",
+      "country": "Country",
+      "parentId": "ParentId"
+    }
+  },
+  "types": {
+    "send": "Send",
+    "title-edit": "Edit Periodicity",
+    "title-add": "Add Type",
+    "title": "Types",
+    "label": {
+      "periodicity": "Periodicity",
+      "description": "Description",
+      "amount": "Amount",
+      "type": "Type",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Annual"
+    }
+  },
+  "users": {
+    "send": "Send",
+    "title-edit": "Edit User",
+    "title-add": "Add User",
+    "title": "Users",
+    "label": {
+      "login": "Login",
+      "name": "Name",
+      "lastname": "lastname",
+      "password": "Password",
+      "group": "Group",
+      "rol": "Rol",
+      "admin": "Administrator",
+      "user": "User"
+    }
   }
 }

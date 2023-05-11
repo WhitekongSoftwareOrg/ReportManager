@@ -75,44 +75,102 @@
   },
   "group": {
     "send": "Enviar",
-    "title-edit": "Editar sitio",
+    "title-edit": "Editar Grupo",
     "title-add": "Añadir grupo",
-    "title": "Grupos"
+    "title": "Grupos",
+    "error": "Ha ocurrido un error",
+    "label": {
+      "name": "Nombre",
+      "description": "Descripción"
+    }
   },
   "email": {
     "send": "Enviar",
     "title-edit": "Editar Lista de correos",
     "title-add": "Añadir Lista de correos",
-    "title": "Lista de correos"
+    "title": "Lista de correos",
+    "label": {
+      "name": "Nombre",
+      "directions": "Direcciones",
+      "list": "Correos (Presiona 'enter' despues de cada correo)"
+    }
   },
   "report": {
     "send": "Enviar",
     "title-edit": "Editar Informe",
     "title-add": "Añadir Informe",
-    "title": "Informes"
+    "title": "Informes",
+    "label": {
+      "id": "Id",
+      "name": "Nombre",
+      "description": "Descripción",
+      "first-exec": "Primera ejecución",
+      "last-exec": "Siguiente ejecución"
+    }
   },
   "security": {
     "send": "Enviar",
     "title-edit": "Editar entrada de seguridad",
     "title-add": "Añadir entrada de seguridad",
-    "title": "Entradas de seguridad"
+    "title": "Entradas de seguridad",
+    "label": {
+      "name-user": "Nombre Usuario Windows",
+      "name-group": "Nombre Grupo Windows",
+      "rol": {
+        "label": "Rol",
+        "user": "Usuario",
+        "validator": "Validador",
+        "admin": "Administrador"
+      },
+      "group": "Grupo",
+      "site": "Sitio"
+    }
   },
   "sites": {
     "send": "Enviar",
     "title-edit": "Editar Sitio",
     "title-add": "Añadir Sitio",
-    "title": "Sitios"
+    "title": "Sitios",
+    "label": {
+      "name": "Nombre",
+      "description": "Descripción",
+      "centralCode": "Sitio",
+      "city": "Ciudad",
+      "region": "Región",
+      "country": "País",
+      "parentId": "PadreId"
+    }
   },
   "types": {
     "send": "Enviar",
     "title-edit": "Editar Periodicidad",
     "title-add": "Añadir Tipo",
-    "title": "Tipos"
+    "title": "Tipos",
+    "label": {
+      "periodicity": "Periodicidad",
+      "description": "Descripción",
+      "amount": "Cantidad",
+      "type": "Tipo",
+      "daily": "Diario",
+      "weekly": "Semanal",
+      "monthly": "Mensual",
+      "yearly": "Anual"
+    }
   },
   "users": {
     "send": "Enviar",
     "title-edit": "Editar Usuario",
     "title-add": "Añadir Usuario",
-    "title": "Usuarios"
+    "title": "Usuarios",
+    "label": {
+      "login": "Login",
+      "name": "Nombre",
+      "lastname": "Apellido",
+      "password": "Contraseña",
+      "group": "Grupo",
+      "rol": "Rol",
+      "admin": "Administrador",
+      "user": "Usuario"
+    }
   }
 }

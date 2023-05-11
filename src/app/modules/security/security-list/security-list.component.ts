@@ -10,17 +10,17 @@ export class SecurityListComponent implements OnInit {
   loading = false;
   columns = [
     {
-      label: 'Nombre Usuario Windows',
+      label: 'security.label.name-user',
       name: 'windowsIdentityUserName',
-      sortable: true
+      sortable: true,
     },
     {
-      label: 'Nombre Grupo Windows',
+      label: 'security.label.name-group',
       name: 'windowsIdentityGroupName',
-      sortable: true
+      sortable: true,
     },
     {
-      label: 'Rol',
+      label: 'security.label.rol.label',
       name: 'roleId',
       sortable: true,
       options: [
@@ -35,20 +35,20 @@ export class SecurityListComponent implements OnInit {
         {
           value: 3,
           label: 'Administrador',
-        }
-      ]
+        },
+      ],
     },
     {
-      label: 'Grupo',
+      label: 'security.label.group',
       name: 'securityUserGroupId',
       filterName: 'securityUserGroupName',
-      sortable: true
+      sortable: true,
     },
     {
-      label: 'Sitio',
+      label: 'security.label.site',
       name: 'centralId',
       filterName: 'centralName',
-      sortable: true
+      sortable: true,
     },
   ];
 
@@ -56,63 +56,77 @@ export class SecurityListComponent implements OnInit {
     1: 'Usuario',
     2: 'Validador',
     3: 'Administrador',
-  }
+  };
 
   count = 0;
   list: any = [];
 
   constructor(
     private title: TitleService,
-    private securitiesService: SecuritiesService,
-  ) {
-  }
+    private securitiesService: SecuritiesService
+  ) {}
 
   removeRows(event: any) {
     this.loading = true;
     this.securitiesService.apiSecuritiesRemoveByIdsPut(event).subscribe(() => {
-      this.securitiesService.apiSecuritiesGet(0, 10, 'securityId', 'DESC').subscribe((_res: any) => {
-        this.count = _res.count;
-        this.list = _res.list;
-        this.loading = false;
-      })
-    })
+      this.securitiesService
+        .apiSecuritiesGet(0, 10, 'securityId', 'DESC')
+        .subscribe((_res: any) => {
+          this.count = _res.count;
+          this.list = _res.list;
+          this.loading = false;
+        });
+    });
   }
 
   getList(event: any) {
-    console.log(event.filter)
+    console.log(event.filter);
     this.loading = true;
-    this.securitiesService.apiSecuritiesGet(
-      event.skip,
-      event.take,
-      event.orderBy,
-      event.orderDirection,
-      undefined,
-      undefined,
-      event.filter.windowsIdentityUserName,
-      event.filter.windowsIdentityGroupName,
-      event.filter.roleId,
-      undefined,
-      event.filter.centralName,
-      event.filter.securityUserGroupName,
-      event.filter.securityUserGroupId,
-    ).subscribe((res: any) => {
-      this.loading = false;
-      this.count = res.count;
-      this.list = res.list.map((item: any) => {
-        const userGroup = item.securityUserGroupId ? item.securityUserGroupId + '-' : '';
-        const centralId = item.centralId ? item.centralId + '-' : '';
-        const populatedGroup = res.populatedUserGroups.find((ug: any) => ug.userGroupId == item.securityUserGroupId);
-        const populatedCentral = res.populatedCentrals.find((ug: any) => ug.centralId == item.centralId)
-
-        return {
-          ...item,
-          securityUserGroupId: userGroup + (populatedGroup ? populatedGroup.userGroupName : 'All groups'),
-          centralId: centralId + (populatedCentral ? populatedCentral.centralCode : 'All centrals'),
-          roleId: this.mapRol[item.roleId]
-        }
-      }
+    this.securitiesService
+      .apiSecuritiesGet(
+        event.skip,
+        event.take,
+        event.orderBy,
+        event.orderDirection,
+        undefined,
+        undefined,
+        event.filter.windowsIdentityUserName,
+        event.filter.windowsIdentityGroupName,
+        event.filter.roleId,
+        undefined,
+        event.filter.centralName,
+        event.filter.securityUserGroupName,
+        event.filter.securityUserGroupId
       )
-    })
+      .subscribe((res: any) => {
+        this.loading = false;
+        this.count = res.count;
+        this.list = res.list.map((item: any) => {
+          const userGroup = item.securityUserGroupId
+            ? item.securityUserGroupId + '-'
+            : '';
+          const centralId = item.centralId ? item.centralId + '-' : '';
+          const populatedGroup = res.populatedUserGroups.find(
+            (ug: any) => ug.userGroupId == item.securityUserGroupId
+          );
+          const populatedCentral = res.populatedCentrals.find(
+            (ug: any) => ug.centralId == item.centralId
+          );
+
+          return {
+            ...item,
+            securityUserGroupId:
+              userGroup +
+              (populatedGroup ? populatedGroup.userGroupName : 'All groups'),
+            centralId:
+              centralId +
+              (populatedCentral
+                ? populatedCentral.centralCode
+                : 'All centrals'),
+            roleId: this.mapRol[item.roleId],
+          };
+        });
+      });
   }
 
   ngOnInit(): void {
