@@ -5,7 +5,7 @@ export const typeFields: FormlyFieldConfig[] = [
     key: 'periodicityName',
     type: 'input',
     props: {
-      label: 'Peridiocidad',
+      label: 'types.label.periodicity',
       required: true,
     },
   },
@@ -13,7 +13,7 @@ export const typeFields: FormlyFieldConfig[] = [
     key: 'periodicityQuantity',
     type: 'input',
     props: {
-      label: 'Cantidad',
+      label: 'types.label.amount',
       type: 'number',
       required: true,
       allowedKeys: '[0-9]',
@@ -23,24 +23,24 @@ export const typeFields: FormlyFieldConfig[] = [
     key: 'periodicityType',
     type: 'radio',
     templateOptions: {
-      label: 'Tipo',
+      label: 'types.label.type',
       required: true,
       options: [
         {
           value: 1,
-          label: 'Diario',
+          label: 'types.label.daily',
         },
         {
           value: 2,
-          label: 'Semanal',
+          label: 'types.label.weekly',
         },
         {
           value: 3,
-          label: 'Mensual',
+          label: 'types.label.monthly',
         },
         {
           value: 4,
-          label: 'Anual',
+          label: 'types.label.yearly',
         },
       ],
     },
@@ -49,7 +49,7 @@ export const typeFields: FormlyFieldConfig[] = [
     key: 'periodicityDescription',
     type: 'textarea',
     props: {
-      label: 'Descripción',
+      label: 'types.label.description',
       required: true,
       maxLength: 100,
       rows: 5,

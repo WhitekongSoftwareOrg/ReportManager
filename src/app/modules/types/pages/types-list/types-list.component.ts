@@ -11,12 +11,12 @@ export class TypesListComponent implements OnInit {
   loading = false;
   columns = [
     {
-      label: 'Periodicidad',
+      label: 'types.label.periodicity',
       name: 'periodicityName',
       sortable: true,
     },
     {
-      label: 'Descripción',
+      label: 'types.label.description',
       name: 'periodicityDescription',
       sortable: true,
     },
