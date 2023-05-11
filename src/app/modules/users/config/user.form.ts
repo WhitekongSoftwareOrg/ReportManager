@@ -5,7 +5,7 @@ export const userFields: FormlyFieldConfig[] = [
     key: 'userName',
     type: 'input',
     props: {
-      label: 'Nombre',
+      label: 'users.label.name',
       required: true,
       maxLength: 20,
     },
@@ -14,7 +14,7 @@ export const userFields: FormlyFieldConfig[] = [
     key: 'userLastName',
     type: 'input',
     props: {
-      label: 'Apellido',
+      label: 'users.label.lastname',
       required: true,
       maxLength: 20,
     },
@@ -23,7 +23,7 @@ export const userFields: FormlyFieldConfig[] = [
     key: 'userLogin',
     type: 'input',
     props: {
-      label: 'Login',
+      label: 'users.label.login',
       required: true,
       maxLength: 20,
     },
@@ -33,7 +33,7 @@ export const userFields: FormlyFieldConfig[] = [
     type: 'input',
     props: {
       type: 'password',
-      label: 'Contraseña',
+      label: 'users.label.password',
       required: true,
       maxLength: 20,
     },
@@ -42,7 +42,7 @@ export const userFields: FormlyFieldConfig[] = [
     key: 'userGroupId',
     type: 'select',
     templateOptions: {
-      label: 'Grupo',
+      label: 'users.label.group',
       required: true,
       options: [],
     },
@@ -51,16 +51,16 @@ export const userFields: FormlyFieldConfig[] = [
     key: 'userRol',
     type: 'select',
     templateOptions: {
-      label: 'Rol',
+      label: 'users.label.rol',
       required: true,
       options: [
         {
           value: 'Admin',
-          label: 'Administrador',
+          label: 'users.label.admin',
         },
         {
           value: 'User',
-          label: 'Usuario',
+          label: 'users.label.user',
         },
       ],
     },
