@@ -5,7 +5,7 @@ export const groupFields: FormlyFieldConfig[] = [
     key: 'userGroupName',
     type: 'input',
     props: {
-      label: 'Grupo',
+      label: 'group.label.name',
       required: true,
       maxLength: 20,
     },
@@ -14,7 +14,7 @@ export const groupFields: FormlyFieldConfig[] = [
     key: 'userGroupDescription',
     type: 'textarea',
     props: {
-      label: 'Descripción',
+      label: 'group.label.description',
       required: true,
       maxLength: 50,
       rows: 5,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { UserGroupService } from 'src/app/shared/services/swagger';
 import { TitleService } from 'src/app/shared/services/title.service';
 
@@ -11,12 +12,12 @@ export class GroupListComponent implements OnInit {
   loading = false;
   columns = [
     {
-      label: 'Nombre',
+      label: 'group.label.name',
       name: 'userGroupName',
       sortable: true,
     },
     {
-      label: 'Descripción',
+      label: 'group.label.description',
       name: 'userGroupDescription',
       sortable: true,
     },
@@ -45,6 +46,7 @@ export class GroupListComponent implements OnInit {
 
   getList(event: any) {
     this.loading = true;
+    
     this.userGroupService
       .apiUserGroupGet(
         event.skip,

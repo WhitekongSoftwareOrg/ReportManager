@@ -19,6 +19,7 @@ export class GroupEditComponent implements OnInit {
   model: any = {};
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[] = fields;
+  fieldsTemplate: FormlyFieldConfig[] = fields;
 
   constructor(
     private title: TitleService,
@@ -41,8 +42,15 @@ export class GroupEditComponent implements OnInit {
         .subscribe((res) => {
           this.group = res;
           this.setData();
+          this.fieldsTemplate = this.fields;
+          this.rebuildFields();
         });
     }
+
+    this.translate.onLangChange.subscribe(() => {
+      this.title.changeTitle('group.title-edit');
+      this.rebuildFields();
+    });
   }
 
   setData() {
@@ -63,8 +71,24 @@ export class GroupEditComponent implements OnInit {
           (res) => {
             this.router.navigate(['/groups']);
           },
-          (error) => alert('Ha ocurrido un error')
+          (error) => alert('group.error')
         );
     }
+  }
+
+  rebuildFields() {
+    this.fields = this.fieldsTemplate.map((fild: any) => {
+      if (!fild?.props?.label) {
+        return;
+      }
+
+      return {
+        ...fild,
+        props: {
+          ...fild.props,
+          label: this.translate.instant(fild.props.label),
+        },
+      };
+    });
   }
 }

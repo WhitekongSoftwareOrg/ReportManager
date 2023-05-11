@@ -5,6 +5,7 @@ import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
 import { groupFields as fields } from '../config/group.form';
 import { UserGroup, UserGroupService } from 'src/app/shared/services/swagger';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-group-add',
@@ -15,18 +16,24 @@ export class GroupAddComponent implements OnInit {
   form = new FormGroup({});
   model: UserGroup = {};
   options: FormlyFormOptions = {};
+  fields: FormlyFieldConfig[] = fields;
+  fieldsTemplate: FormlyFieldConfig[] = fields;
 
   constructor(
     private title: TitleService,
     private userGroupService: UserGroupService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
     this.title.changeTitle('group.title-add');
+    this.rebuildFields();
+    this.translate.onLangChange.subscribe(() => {
+      this.title.changeTitle('group.title-add');
+      this.rebuildFields();
+    });
   }
-
-  fields: FormlyFieldConfig[] = fields;
 
   submit() {
     if (this.form.valid) {
@@ -40,9 +47,23 @@ export class GroupAddComponent implements OnInit {
             this.router.navigate(['/groups']);
           },
           (error) => {
-            alert('Ha ocurrido un error durante la creación de sitios');
+            const msg = this.translate.instant('group.error');
+            alert(msg);
           }
         );
     }
+  }
+
+  rebuildFields() {
+    this.fields = this.fieldsTemplate.map((fild: any) => {
+      const label = fild.props.label;
+      return {
+        ...fild,
+        props: {
+          ...fild.props,
+          label: this.translate.instant(label),
+        },
+      };
+    });
   }
 }
