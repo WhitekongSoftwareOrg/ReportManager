@@ -5,7 +5,7 @@ export const siteFields: FormlyFieldConfig[] = [
     key: 'centralCode',
     type: 'input',
     props: {
-      label: 'Sitio',
+      label: 'sites.label.centralCode',
       required: true,
       maxLength: 5,
     },
@@ -14,7 +14,7 @@ export const siteFields: FormlyFieldConfig[] = [
     key: 'centralCity',
     type: 'input',
     props: {
-      label: 'Ciudad',
+      label: 'sites.label.city',
       required: true,
       maxLength: 50,
     },
@@ -23,7 +23,7 @@ export const siteFields: FormlyFieldConfig[] = [
     key: 'centralRegion',
     type: 'input',
     props: {
-      label: 'Región',
+      label: 'sites.label.region',
       required: true,
       maxLength: 50,
     },
@@ -32,7 +32,7 @@ export const siteFields: FormlyFieldConfig[] = [
     key: 'centralDescription',
     type: 'textarea',
     props: {
-      label: 'Descripción',
+      label: 'sites.label.description',
       required: true,
       maxLength: 50,
     },
@@ -41,7 +41,7 @@ export const siteFields: FormlyFieldConfig[] = [
     key: 'centralCountry',
     type: 'input',
     props: {
-      label: 'País',
+      label: 'sites.label.country',
       required: true,
       maxLength: 50,
     },
