@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { reportFields as fields } from '../config/report.forms';
-import { ReporttMockService as mock } from 'src/app/core/mock/report.mock';
+import { reportFields as fields, reportFields } from '../config/report.forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CentralsService, MailListsService, Report, ReportsService, UserGroupService } from 'src/app/shared/services/swagger';
 
 @Component({
   selector: 'app-report-edit',
@@ -12,289 +12,168 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./report-edit.component.scss'],
 })
 export class ReportEditComponent implements OnInit {
-  id: string | number = '';
-  report: any = {};
   form = new FormGroup({});
-  model: any = {};
+  data: Report = {};
   options: FormlyFormOptions = {};
-  fields: FormlyFieldConfig[] = fields;
+  fields!: FormlyFieldConfig[];
+  id: string | number = '';
 
   constructor(
     private title: TitleService,
-    private mock: mock,
+    private router: Router,
+    private reportsService: ReportsService,
+    private userGroupService: UserGroupService,
+    private mailService: MailListsService,
+    private centralService: CentralsService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  ) {
+    const aux = [...fields];
+
+    this.fields = aux.filter((f: any) => f.key != 'file')
+  }
 
   ngOnInit(): void {
     this.title.changeTitle('report.title-edit');
-
     this.route.params.subscribe((params: any) => {
       this.id = params.id;
     });
 
-    this.mock.getReportById(this.id).subscribe((data) => {
-      this.report = data;
-    });
+    if (this.id) {
+      this.reportsService.apiReportsIdGet(this.id as any).subscribe(res => {
+        this.data = {
+          ...res,
+          reportNextDate: new Date(res.reportNextDate!),
+          reportNextUtcDate: new Date(res.reportNextUtcDate!),
+          reportFirstDate: new Date(res.reportFirstDate!)
+        }
+        this.userGroupService.apiUserGroupGet().subscribe((res) => {
+          (
+            fields.find((f: any) => f.key === 'reportUserGroupId') as any
+          ).templateOptions.options = (res as any).list.map((r: any) => ({
+            value: r.userGroupId,
+            label: r.userGroupName,
+          }));
 
-    setTimeout(() => {
-      this.setData();
-    }, 500);
+          if ((res as any).list && (res as any).list[0]) {
+            this.data.reportUserGroupId = (res as any).list[0].userGroupId;
+          }
+
+          this.centralService.apiCentralsGet().subscribe((_res) => {
+            (
+              fields.find((f: any) => f.key === 'centralId') as any
+            ).templateOptions.options = (_res as any).list.map((r: any) => ({
+              value: r.centralId,
+              label: r.centralCode,
+            }));
+
+            if ((_res as any).list && (_res as any).list[0]) {
+              this.data.centralId = (_res as any).list[0].centralId;
+            }
+
+            this.mailService.apiMailListsGet().subscribe((__res) => {
+              if (!__res || !__res.list?.length) {
+                return;
+              }
+
+              const mailList = (__res as any).list.map((r: any) => ({
+                value: r.mailListId,
+                label: r.mailListName,
+              }));
+              (
+                fields.find((f: any) => f.key === 'mailListId') as any
+              ).props.options = mailList;
+              (
+                fields.find((f: any) => f.key === 'revisionMailListId') as any
+              ).props.options = mailList;
+
+              if ((__res as any).list && (__res as any).list[0]) {
+                this.data.mailListId = (__res as any).list[0].mailListId;
+                this.data.revisionMailListId = (__res as any).list[0].mailListId;
+              }
+
+              this.data.periodicityId = 1;
+              (this.data.reportExecHour as any) = '0';
+              this.form.patchValue(this.data);
+              this.setData();
+            });
+          });
+        });
+      })
+    }
+
   }
 
   setData() {
-    this.fields = [
+    this.fields = Object.keys(this.data).map((siteProp: any) => (
       {
-        key: 'name',
-        type: 'input',
-        defaultValue: this.report.name ?? '',
-        props: {
-          label: 'Nombre',
-          required: true,
-        },
-      },
-      {
-        key: 'type',
-        type: 'radio',
-        defaultValue: this.report.type ?? '',
-        templateOptions: {
-          label: 'Radio',
-          required: true,
-          options: [
-            {
-              value: 'daily',
-              label: 'Diario',
-            },
-            {
-              value: 'weekly',
-              label: 'Semanal',
-            },
-            {
-              value: 'mountly',
-              label: 'Mensual',
-            },
-            {
-              value: 'yearly',
-              label: 'Anual',
-            },
-          ],
-        },
-      },
-      {
-        key: 'site',
-        type: 'select',
-        defaultValue: this.report.site ?? '',
-        templateOptions: {
-          label: 'Sitios',
-          required: true,
-          options: [
-            {
-              value: 'site1',
-              label: 'Sitio 1',
-            },
-            {
-              value: 'site2',
-              label: 'Sitio 2',
-            },
-            {
-              value: 'site3',
-              label: 'Sitio 3',
-            },
-            {
-              value: 'site4',
-              label: 'Sitio 4',
-            },
-          ],
-        },
-      },
-      {
-        key: 'group',
-        type: 'select',
-        defaultValue: this.report.group ?? '',
-        templateOptions: {
-          label: 'Grupo',
-          required: true,
-          options: [
-            {
-              value: 'sales',
-              label: 'Ventas',
-            },
-            {
-              value: 'marketing',
-              label: 'Marketing',
-            },
-            {
-              value: 'development',
-              label: 'Desarrollo',
-            },
-            {
-              value: 'admon',
-              label: 'Administradores',
-            },
-          ],
-        },
-      },
-      {
-        key: 'first_execution',
-        type: 'datepicker',
-        defaultValue: this.report.first_execution ?? '',
-        props: {
-          label: 'Primera ejecución',
-          required: true,
-          dateFormat: 'yy/mm/dd',
-          hourFormat: '24',
-          numberOfMonths: 1,
-          selectionMode: 'single',
-          readonlyInput: false,
-          showTime: false,
-          showButtonBar: true,
-          showIcon: true,
-          showOtherMonths: true,
-          selectOtherMonths: false,
-          monthNavigator: false,
-          yearNavigator: false,
-          yearRange: '2020:2030',
-          inline: false,
-        },
-      },
-      {
-        key: 'date_cell',
-        type: 'datepicker',
-        defaultValue: this.report.date_cell ?? '',
-        props: {
-          label: 'Celda de la fecha',
-          required: true,
-          dateFormat: 'yy/mm/dd',
-          hourFormat: '24',
-          numberOfMonths: 1,
-          selectionMode: 'single',
-          readonlyInput: false,
-          showTime: false,
-          showButtonBar: true,
-          showIcon: true,
-          showOtherMonths: true,
-          selectOtherMonths: false,
-          monthNavigator: false,
-          yearNavigator: false,
-          yearRange: '2020:2030',
-          inline: false,
-        },
-      },
-      {
-        key: 'file_name',
-        type: 'file',
-        defaultValue: this.report.file_name ?? '',
-        props: {
-          label: 'Nombre del fichero',
-          required: true,
-        },
-      },
-      {
-        key: 'macro_before',
-        type: 'input',
-        defaultValue: this.report.macro_before ?? '',
-        props: {
-          label: 'Macro Excel a ejecutar antes del cálculo del informe',
-        },
-      },
-      {
-        key: 'macro_after',
-        defaultValue: this.report.macro_after ?? '',
-        type: 'input',
-        props: {
-          label: 'Macro Excel a ejecutar tras el cálculo del informe',
-        },
-      },
-      {
-        key: 'notification_format',
-        type: 'input',
-        defaultValue: this.report.notification_format ?? '',
-        props: {
-          label: 'Formato de nombre notificaciones',
-          required: true,
-        },
-      },
-      {
-        key: 'description',
-        defaultValue: this.report.description ?? '',
-        type: 'input',
-        props: {
-          label: 'Notas',
-        },
-      },
-      {
-        key: 'validation_required',
-        defaultValue: this.report.validation_required ?? '',
-        type: 'checkbox',
-        props: {
-          label: '¿Requiere validación?',
-        },
-      },
-      {
-        key: 'comment_range',
-        defaultValue: this.report.comment_range ?? '',
-        type: 'input',
-        props: {
-          label: 'Rango para comentarios del operador',
-        },
-      },
-      {
-        key: 'execution_time',
-        type: 'datepicker',
-        defaultValue: this.report.execution_time ?? '',
-        props: {
-          label: 'Hora de ejecución (UTC)',
-          required: true,
-          dateFormat: 'yy/mm/dd',
-          hourFormat: '24',
-          numberOfMonths: 1,
-          selectionMode: 'single',
-          readonlyInput: false,
-          showTime: false,
-          showButtonBar: true,
-          showIcon: true,
-          showOtherMonths: true,
-          selectOtherMonths: false,
-          monthNavigator: false,
-          yearNavigator: false,
-          yearRange: '2020:2030',
-          inline: false,
-        },
-      },
-      {
-        key: 'email_list',
-        defaultValue: this.report.email_list ?? '',
-        type: 'input',
-        props: {
-          label: 'Lista de correo',
-          required: true,
-        },
-      },
-      {
-        key: 'review_list',
-        defaultValue: this.report.review_list ?? '',
-        type: 'input',
-        props: {
-          label: 'Lista de notificación de revisión',
-          required: true,
-        },
-      },
-      {
-        key: 'disabled',
-        defaultValue: this.report.disabled ?? '',
-        type: 'checkbox',
-        props: {
-          label: 'Deshabilitado',
-        },
-      },
-    ];
+        ...reportFields.find((field: any) => field.key === siteProp),
+        defaultValue: (this.data as any)[siteProp]
+      }
+    ))
   }
 
+  getParasedDate(date: Date) {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}T00:00:00Z`;
+  }
   submit() {
     if (this.form.valid) {
-      alert(JSON.stringify(this.model));
+      let nextDate: Date = new Date(this.data.reportFirstDate as any);
+      // nextDate.setHours(0, 0, 0, 0);
+      // const newxtDateMethods: any = {
+      //   1: (date: Date, days: number) => {
+      //     date.setDate(date.getDate() + days);
+      //     return date;
+      //   },
+      //   2: (date: Date, days: number) => {
+      //     date.setDate(date.getDate() + days * 7);
+      //     return date;
+      //   },
+      //   3: (date: Date, months: number) => {
+      //     date.setMonth(date.getMonth() + months);
+      //     return date;
+      //   },
+      // };
+
+      // nextDate = this.data.reportFirstDate!;
+      this.reportsService
+        .apiReportsIdPut(this.id as any, {
+          ...this.data,
+          reportNextDate: this.getParasedDate(
+            new Date(nextDate as any)
+          ) as any,
+          reportFirstDate: this.getParasedDate(
+            new Date(this.data.reportFirstDate as any)
+          ) as any,
+          reportNextUtcDate: new Date(
+            Date.UTC(
+              nextDate.getUTCFullYear(),
+              nextDate.getUTCMonth(),
+              nextDate.getUTCDate(),
+              nextDate.getUTCHours(),
+              nextDate.getUTCMinutes(),
+              nextDate.getUTCSeconds()
+            )
+          ),
+          userId: Number.parseInt(
+            localStorage.getItem('ctk-userid') || '0'
+          ),
+          reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}',
+        })
+        .subscribe(
+          (res) => {
+            this.router.navigate(['/reports']);
+          },
+          (error) => {
+            alert(
+              'Ha ocurrido un error durante la creación de informes'
+            );
+          }
+        );
+    } else {
+      alert('Ha ocurrido un error al subir el fichero');
     }
-    //DO API THINGS
-    this.router.navigate(['../']);
   }
 }

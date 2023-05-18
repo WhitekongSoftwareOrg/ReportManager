@@ -59,12 +59,12 @@ export class ReportsListComponent implements OnInit {
 
   getList(event: any) {
     this.loading = true;
-
     this.reportsService.apiReportsGet(
       event.skip,
       event.take,
       event.orderBy,
       event.orderDirection,
+      event.filter.reportId,
       event.filter.reportName,
       event.filter.reportDescription,
       event.filter.reportFirstDate,

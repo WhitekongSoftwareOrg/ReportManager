@@ -1,11 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <formly-form
-    [model]="model"
+    [model]="data"
     [fields]="fields"
     [options]="options"
     [form]="form"
   ></formly-form>
-  <button type="submit" class="btn btn-primary submit-button">
+  <button
+    type="submit"
+    class="btn btn-primary submit-button"
+    [disabled]="!this.form.valid"
+  >
     {{ "report.send" | translate }}
   </button>
 </form>
