@@ -36,11 +36,6 @@ export class SiteListComponent implements OnInit {
       name: 'centralCountry',
       sortable: true,
     },
-    {
-      label: 'sites.label.parentId',
-      name: 'centralParentId',
-      sortable: true,
-    },
   ];
 
   count = 0;

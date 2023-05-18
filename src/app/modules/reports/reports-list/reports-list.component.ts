@@ -59,6 +59,7 @@ export class ReportsListComponent implements OnInit {
 
   getList(event: any) {
     this.loading = true;
+
     this.reportsService.apiReportsGet(
       event.skip,
       event.take,

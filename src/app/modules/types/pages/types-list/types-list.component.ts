@@ -14,6 +14,20 @@ export class TypesListComponent implements OnInit {
       label: 'types.label.periodicity',
       name: 'periodicityName',
       sortable: true,
+      options: [
+        {
+          value: 1,
+          label: 'Weekly',
+        },
+        {
+          value: 4,
+          label: 'Monthly',
+        },
+        {
+          value: 1004,
+          label: 'Daily',
+        },
+      ],
     },
     {
       label: 'types.label.description',
@@ -28,7 +42,7 @@ export class TypesListComponent implements OnInit {
   constructor(
     private title: TitleService,
     private periodicitiesService: PeriodicitiesService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title.changeTitle('types.title');

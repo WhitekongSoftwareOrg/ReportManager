@@ -97,23 +97,23 @@ export class ReportAddComponent implements OnInit {
   submit() {
     if (this.form.valid) {
       let nextDate: Date = new Date(this.model.reportFirstDate as any);
-      nextDate.setHours(0, 0, 0, 0);
-      const newxtDateMethods: any = {
-        1: (date: Date, days: number) => {
-          date.setDate(date.getDate() + days);
-          return date;
-        },
-        2: (date: Date, days: number) => {
-          date.setDate(date.getDate() + days * 7);
-          return date;
-        },
-        3: (date: Date, months: number) => {
-          date.setMonth(date.getMonth() + months);
-          return date;
-        },
-      };
+      // nextDate.setHours(0, 0, 0, 0);
+      // const newxtDateMethods: any = {
+      //   1: (date: Date, days: number) => {
+      //     date.setDate(date.getDate() + days);
+      //     return date;
+      //   },
+      //   2: (date: Date, days: number) => {
+      //     date.setDate(date.getDate() + days * 7);
+      //     return date;
+      //   },
+      //   3: (date: Date, months: number) => {
+      //     date.setMonth(date.getMonth() + months);
+      //     return date;
+      //   },
+      // };
 
-      nextDate = newxtDateMethods[this.model.periodicityId || 1](nextDate, 1);
+      // nextDate = this.model.reportFirstDate!;
       this.reportsService
         .filePostForm(
           new File(

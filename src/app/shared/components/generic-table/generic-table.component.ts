@@ -57,7 +57,7 @@ export class GenericTableComponent implements OnChanges {
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   clear(property: string) {
     delete this.filter[property];
@@ -145,9 +145,10 @@ export class GenericTableComponent implements OnChanges {
   }
 
   onSort(event: any) {
-    if (event.field !== this.orderBy && event.order !== this.orderDirection) {
+    const parseOrder = event.order === 1 ? 'ASC' : 'DESC'
+    if (event.field !== this.orderBy ||  parseOrder !== this.orderDirection) {
       this.orderBy = event.field;
-      this.orderDirection = event.order === 1 ? 'ASC' : 'DESC';
+      this.orderDirection = parseOrder;
       this.onGetList.emit({
         filter: this.filter,
         count: this.count,
@@ -159,74 +160,74 @@ export class GenericTableComponent implements OnChanges {
     }
   }
 
-  onPageChange(event: any) {
-    this.skip = event.page * event.rows;
-    this.take = event.rows;
-    this.onGetList.emit({
-      filter: this.filter,
-      count: this.count,
-      skip: this.skip,
-      take: this.take,
-      orderBy: this.orderBy,
-      orderDirection: this.orderDirection,
-    });
-  }
+onPageChange(event: any) {
+  this.skip = event.page * event.rows;
+  this.take = event.rows;
+  this.onGetList.emit({
+    filter: this.filter,
+    count: this.count,
+    skip: this.skip,
+    take: this.take,
+    orderBy: this.orderBy,
+    orderDirection: this.orderDirection,
+  });
+}
 
-  updateRowsInTable(event: any) {
-    // this.numResultsDisplayed = event.rows;
-    // this.actualFirst = event.first;
-  }
+updateRowsInTable(event: any) {
+  // this.numResultsDisplayed = event.rows;
+  // this.actualFirst = event.first;
+}
 
-  delete(row?: any) {
-    let selected = 0;
-    this.confirmationService.confirm({
-      message:
-        this.selectedRows && this.selectedRows.length > 1
-          ? this.removeMessageMultiple?.replace(
-              '{num}',
-              this.selectedRows.length.toString()
-            )
-          : this.removeMessage || '',
-      header: `¿Quieres elimiar ${this.selectedRows
-        ?.map((row: any) => row[this.nameColumn!])
-        .join(',')}?`,
-      icon: 'pi pi-info-circle',
-      accept: () => {
-        if (row && this) {
-          this.selectedRows = [row];
-          selected = 1;
-          this.removeAll();
-          this.selectedRows = [];
-        } else {
-          selected = this.selectedRows?.length;
-          this.removeAll();
-          this.selectedRows = [];
-        }
-        this.messageService.add({
-          severity: 'info',
-          summary: 'Éxito',
-          detail: `${selected} eliminado${selected && selected > 1 ? 's' : ''}`,
-        });
-      },
-      reject: (type: any) => {
-        switch (type) {
-          case ConfirmEventType.REJECT:
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Acción Rechazada',
-            });
-            break;
-          case ConfirmEventType.CANCEL:
-            this.messageService.add({
-              severity: 'warn',
-              summary: 'Cancelado',
-              detail: 'Acción cancelada',
-            });
-            break;
-        }
-      },
-      key: 'positionDialog',
-    });
-  }
+delete (row ?: any) {
+  let selected = 0;
+  this.confirmationService.confirm({
+    message:
+      this.selectedRows && this.selectedRows.length > 1
+        ? this.removeMessageMultiple?.replace(
+          '{num}',
+          this.selectedRows.length.toString()
+        )
+        : this.removeMessage || '',
+    header: `¿Quieres elimiar ${this.selectedRows
+      ?.map((row: any) => row[this.nameColumn!])
+      .join(',')}?`,
+    icon: 'pi pi-info-circle',
+    accept: () => {
+      if (row && this) {
+        this.selectedRows = [row];
+        selected = 1;
+        this.removeAll();
+        this.selectedRows = [];
+      } else {
+        selected = this.selectedRows?.length;
+        this.removeAll();
+        this.selectedRows = [];
+      }
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Éxito',
+        detail: `${selected} eliminado${selected && selected > 1 ? 's' : ''}`,
+      });
+    },
+    reject: (type: any) => {
+      switch (type) {
+        case ConfirmEventType.REJECT:
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Acción Rechazada',
+          });
+          break;
+        case ConfirmEventType.CANCEL:
+          this.messageService.add({
+            severity: 'warn',
+            summary: 'Cancelado',
+            detail: 'Acción cancelada',
+          });
+          break;
+      }
+    },
+    key: 'positionDialog',
+  });
+}
 }
