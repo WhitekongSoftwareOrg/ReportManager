@@ -53,7 +53,6 @@ export const SecurityFields: FormlyFieldConfig[] = [
     type: 'select',
     templateOptions: {
       label: 'Sitio',
-      required: true,
       options: [],
     },
   },

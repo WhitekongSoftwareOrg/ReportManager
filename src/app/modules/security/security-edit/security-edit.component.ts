@@ -41,17 +41,24 @@ export class SecurityEditComponent implements OnInit {
         this.data = res
         this.userGroupService.apiUserGroupGet().subscribe(res => {
           (fields.find((f: any) => f.key === 'securityUserGroupId') as any).templateOptions.options =
-          (res as any).list.map((r: any) => ({ value: r.userGroupId, label: r.userGroupName }))
+            [
+              { value: null, label: 'All Groups' },
+              ...(res as any).list.map((r: any) => ({ value: r.userGroupId, label: r.userGroupName }))
+            ];
           this.centralService.apiCentralsGet().subscribe(_res => {
             (fields.find((f: any) => f.key === 'centralId') as any).templateOptions.options =
-            (_res as any).list.map((r: any) => ({ value: r.centralId, label: r.centralCode }))
+            [
+              { value: null, label: 'All sites' },
+              ...(_res as any).list.map((r: any) => ({ value: r.centralId, label: r.centralCode }))
+            ];
+
             this.userService.apiUserGet().subscribe(__res => {
               (fields.find((f: any) => f.key === 'userId') as any).templateOptions.options =
                 (__res as any).list.map((r: any) => ({ value: r.userId, label: r.userName }))
-              })
-              this.setData();
             })
+            this.setData();
           })
+        })
       })
     }
   }

@@ -29,8 +29,10 @@ export class SecurityAddComponent implements OnInit {
     this.title.changeTitle('security.title-add');
     this.userGroupService.apiUserGroupGet().subscribe(res => {
       (fields.find((f: any) => f.key === 'securityUserGroupId') as any).templateOptions.options =
-        (res as any).list.map((r: any) => ({ value: r.userGroupId, label: r.userGroupName }))
-
+        [
+          { value: null, label: 'All Groups' },
+          ...(res as any).list.map((r: any) => ({ value: r.userGroupId, label: r.userGroupName }))
+        ];
       if ((res as any).list && (res as any).list[0]) {
         this.model.securityUserGroupId = (res as any).list[0].userGroupId
       }
@@ -39,15 +41,17 @@ export class SecurityAddComponent implements OnInit {
 
       this.centralService.apiCentralsGet().subscribe(_res => {
         (fields.find((f: any) => f.key === 'centralId') as any).templateOptions.options =
-        (_res as any).list.map((r: any) => ({ value: r.centralId, label: r.centralCode }))
-
+          [
+            { value: null, label: 'All sites' },
+            ...(_res as any).list.map((r: any) => ({ value: r.centralId, label: r.centralCode }))
+          ];
         if ((_res as any).list && (_res as any).list[0]) {
           this.model.centralId = (_res as any).list[0].centralId
         }
 
         this.userService.apiUserGet().subscribe(__res => {
           (fields.find((f: any) => f.key === 'userId') as any).templateOptions.options =
-          (__res as any).list.map((r: any) => ({ value: r.userId, label: r.userName }))
+            (__res as any).list.map((r: any) => ({ value: r.userId, label: r.userName }))
 
           if ((__res as any).list && (__res as any).list[0]) {
             this.model.userId = (__res as any).list[0].userId
