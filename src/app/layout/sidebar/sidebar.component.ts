@@ -19,11 +19,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar Sitios',
-            url: '/sites',
+            routerLink: '/sites',
           },
           {
             label: 'Añadir Sitio',
-            url: '/sites/add',
+            routerLink: '/sites/add',
           },
         ],
       },
@@ -33,11 +33,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar tipos',
-            url: '/types',
+            routerLink: '/types',
           },
           {
             label: 'Añadir tipos',
-            url: '/types/add',
+            routerLink: '/types/add',
           },
         ],
       },
@@ -47,11 +47,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar Grupos',
-            url: '/groups',
+            routerLink: '/groups',
           },
           {
             label: 'Añadir Grupo',
-            url: '/groups/add',
+            routerLink: '/groups/add',
           },
         ],
       },
@@ -61,11 +61,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar Usuarios',
-            url: '/users',
+            routerLink: '/users',
           },
           {
             label: 'Añadir usuario',
-            url: '/users/add',
+            routerLink: '/users/add',
           },
         ],
       },
@@ -75,11 +75,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar informes',
-            url: '/reports',
+            routerLink: '/reports',
           },
           {
             label: 'Añadir informe',
-            url: '/reports/add',
+            routerLink: '/reports/add',
           },
         ],
       },
@@ -89,11 +89,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar listas de correos',
-            url: '/email-list',
+            routerLink: '/email-list',
           },
           {
             label: 'Añadir lista de correo',
-            url: '/email-list/add',
+            routerLink: '/email-list/add',
           },
         ],
       },
@@ -103,11 +103,11 @@ export class SidebarComponent implements OnInit {
         items: [
           {
             label: 'Gestionar seguridad',
-            url: '/security',
+            routerLink: '/security',
           },
           {
             label: 'Añadir caso ',
-            url: '/security/add',
+            routerLink: '/security/add',
           },
         ],
       },
