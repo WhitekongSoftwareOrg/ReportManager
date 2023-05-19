@@ -27,14 +27,14 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class MailListsService {
 
-    protected basePath = '/';
+    protected basePath = 'https://194.163.180.64:44348';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
     constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
-        if (basePath) {
-            this.basePath = basePath;
-        }
+        // if (basePath) {
+        //     this.basePath = basePath;
+        // }
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
