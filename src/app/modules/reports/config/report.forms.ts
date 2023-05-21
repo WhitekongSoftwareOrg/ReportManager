@@ -90,15 +90,6 @@ export const reportFields: FormlyFieldConfig[] = [
     },
   },
   {
-    key: 'reportExcelFileName',
-    type: 'input',
-    props: {
-      label: 'Nombre del fichero',
-      required: true,
-      maxLength: 100
-    },
-  },
-  {
     key: 'file',
     type: 'file',
     props: {
@@ -149,6 +140,7 @@ export const reportFields: FormlyFieldConfig[] = [
   {
     key: 'reportAdminNote',
     type: 'textarea',
+    defaultValue: '',
     props: {
       maxLength: 200,
       label: 'Notas',
@@ -166,6 +158,7 @@ export const reportFields: FormlyFieldConfig[] = [
     type: 'input',
     props: {
       maxLength: 100,
+      required: true,
       label: 'Rango para comentarios del operador',
     },
   },

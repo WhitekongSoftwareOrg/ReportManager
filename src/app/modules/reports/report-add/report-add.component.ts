@@ -114,6 +114,7 @@ export class ReportAddComponent implements OnInit {
       // };
 
       // nextDate = this.model.reportFirstDate!;
+      this.model.reportExcelFileName = this.form?.value?.file?.[0]?.name;
       this.reportsService
         .filePostForm(
           new File(

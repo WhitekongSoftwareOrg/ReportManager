@@ -32,7 +32,7 @@ export class UserAddComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.title.changeTitle('user.title-add');
+    this.title.changeTitle('users.title-add');
     this.userGroupService.apiUserGroupGet().subscribe((res) => {
       (
         fields.find((f: any) => f.key === 'userGroupId') as any
@@ -104,6 +104,7 @@ export class UserAddComponent implements OnInit {
           },
         };
 
+        delete objectToReturn.props;
         if (fild.key !== 'userGroupId') {
           objectToReturn.templateOptions.options =
             fild.templateOptions.options.map((option: any) => ({

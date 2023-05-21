@@ -36,6 +36,10 @@ export const SecurityFields: FormlyFieldConfig[] = [
         {
           value: 2,
           label: 'Validador'
+        },
+        {
+          value: 3,
+          label: 'Administrador'
         }
       ],
     },
