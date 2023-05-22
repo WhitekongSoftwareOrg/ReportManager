@@ -94,7 +94,6 @@ export const reportFields: FormlyFieldConfig[] = [
     type: 'file',
     props: {
       label: 'Fichero',
-      required: true,
     },
   },
   {

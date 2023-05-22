@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TitleService } from 'src/app/shared/services/title.service';
 import { FormGroup } from '@angular/forms';
 import { FormlyFormOptions, FormlyFieldConfig } from '@ngx-formly/core';
-import { reportFields as fields, reportFields } from '../config/report.forms';
+import { reportFields as fields, reportFields } from '../config/report.forms-edit';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CentralsService, MailListsService, Report, ReportsService, UserGroupService } from 'src/app/shared/services/swagger';
 
@@ -26,11 +26,7 @@ export class ReportEditComponent implements OnInit {
     private mailService: MailListsService,
     private centralService: CentralsService,
     private route: ActivatedRoute,
-  ) {
-    const aux = [...fields];
-
-    this.fields = aux.filter((f: any) => f.key != 'file')
-  }
+  ) {}
 
   ngOnInit(): void {
     this.title.changeTitle('report.title-edit');
@@ -42,6 +38,7 @@ export class ReportEditComponent implements OnInit {
       this.reportsService.apiReportsIdGet(this.id as any).subscribe(res => {
         this.data = {
           ...res,
+          file: null,
           reportNextDate: new Date(res.reportNextDate!),
           reportNextUtcDate: new Date(res.reportNextUtcDate!),
           reportFirstDate: new Date(res.reportFirstDate!)
@@ -104,10 +101,10 @@ export class ReportEditComponent implements OnInit {
   }
 
   setData() {
-    this.fields = Object.keys(this.data).map((siteProp: any) => (
+    this.fields = reportFields.map((siteProp: any) => (
       {
-        ...reportFields.find((field: any) => field.key === siteProp),
-        defaultValue: (this.data as any)[siteProp]
+        ...siteProp,
+        defaultValue: (this.data as any)[siteProp.key]
       }
     ))
   }
@@ -138,7 +135,62 @@ export class ReportEditComponent implements OnInit {
       // };
 
       // nextDate = this.data.reportFirstDate!;
-      this.reportsService
+      if (this.form?.value?.file) {
+        this.reportsService
+        .filePostForm(
+          new File(
+            [this.form.value.file[0]],
+            this.data.reportExcelFileName || '',
+            { type: this.form.value.file[0].type }
+          )
+        )
+        .subscribe(
+          (res) => {
+            this.reportsService
+            .apiReportsIdPut(this.id as any, {
+              ...this.data,
+              reportNextDate: this.getParasedDate(
+                new Date(nextDate as any)
+              ) as any,
+              reportFirstDate: this.getParasedDate(
+                new Date(this.data.reportFirstDate as any)
+              ) as any,
+              reportNextUtcDate: new Date(
+                Date.UTC(
+                  nextDate.getUTCFullYear(),
+                  nextDate.getUTCMonth(),
+                  nextDate.getUTCDate(),
+                  nextDate.getUTCHours(),
+                  nextDate.getUTCMinutes(),
+                  nextDate.getUTCSeconds()
+                )
+              ),
+              userId: Number.parseInt(
+                localStorage.getItem('ctk-userid') || '0'
+              ),
+              reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}',
+            })
+            .subscribe(
+              (res) => {
+                this.router.navigate(['/reports']);
+              },
+              (error) => {
+                alert(
+                  'Ha ocurrido un error durante la creación de informes'
+                );
+              }
+            );
+          },
+          (error) => {
+            if (error.error == "Exist") {
+              alert('Ya existe un fichero con ese nombre');
+              return;
+            }
+            alert('Ha ocurrido un error al subir el fichero');
+          }
+        );
+      } else {
+        this.reportsService
         .apiReportsIdPut(this.id as any, {
           ...this.data,
           reportNextDate: this.getParasedDate(
@@ -172,6 +224,9 @@ export class ReportEditComponent implements OnInit {
             );
           }
         );
+      }
+      this.data.reportExcelFileName = this.form?.value?.file?.[0]?.name;
+
     } else {
       alert('Ha ocurrido un error al subir el fichero');
     }
