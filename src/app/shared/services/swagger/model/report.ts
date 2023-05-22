@@ -34,4 +34,5 @@ export interface Report {
     reportPostExecutionExcelMacro?: string;
     reportPreExecutionExcelMacro?: string;
     reportDeleted?: boolean;
+    file?: any
 }

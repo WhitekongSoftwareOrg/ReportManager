@@ -31,7 +31,7 @@ export class ReportAddComponent implements OnInit {
     private userGroupService: UserGroupService,
     private mailService: MailListsService,
     private centralService: CentralsService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title.changeTitle('report.title-add');
@@ -165,9 +165,14 @@ export class ReportAddComponent implements OnInit {
             }
           },
           (error) => {
+            if (error.error == "Exist") {
+              alert('Ya existe un fichero con ese nombre');
+              return;
+            }
+
             alert('Ha ocurrido un error al subir el fichero');
           }
         );
-    }
   }
+}
 }
