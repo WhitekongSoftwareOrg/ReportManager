@@ -12,4 +12,5 @@
 
 export interface FileBody { 
     file?: Blob;
+    reportId?: number;
 }

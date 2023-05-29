@@ -48,12 +48,17 @@ export class ReportsListComponent implements OnInit {
 
   removeRows(event: any) {
     this.loading = true;
-    this.reportsService.apiReportsRemoveByIdsPut(event).subscribe(() => {
+    this.reportsService.apiReportsRemoveByIdsPut(event).subscribe(res => {
       this.reportsService.apiReportsGet(0, 10, 'reportId', 'DESC').subscribe((_res: any) => {
         this.count = _res.count;
         this.list = _res.list;
         this.loading = false;
       })
+    }, error => {
+      if (error.error === 'InUse') {
+        alert('No puedes borrar un reporte que está en uso');
+      }
+      this.loading = false;
     })
   }
 
