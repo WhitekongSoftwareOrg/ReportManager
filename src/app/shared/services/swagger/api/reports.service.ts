@@ -10,19 +10,21 @@
  * Do not edit the class manually.
  *//* tslint:disable:no-unused-variable member-ordering */
 
-import { Inject, Injectable, Optional }                      from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent }                           from '@angular/common/http';
-import { CustomHttpUrlEncodingCodec }                        from '../encoder';
+import { Inject, Injectable, Optional } from '@angular/core';
+import {
+    HttpClient, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent
+} from '@angular/common/http';
+import { CustomHttpUrlEncodingCodec } from '../encoder';
 
-import { Observable }                                        from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { AnyType } from '../model/anyType';
 import { ListResponseReports } from '../model/listResponseReports';
 import { Report } from '../model/report';
 
-import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
-import { Configuration }                                     from '../configuration';
+import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { Configuration } from '../configuration';
 
 
 @Injectable()
@@ -92,7 +94,7 @@ export class ReportsService {
     public apiReportsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, reportId?: number, reportName?: string, reportDescription?: string, reportFirstDate?: Date, reportNextDate?: Date, reportDateCell?: string, reportExcelFileName?: string, centralId?: number, reportAdminNote?: string, reportValidationRequired?: string, reportOpRange?: string, reportExecHour?: number, mailListId?: number, reportNextUtcDate?: Date, userId?: number, reportFileNameFormat?: string, reportAttachedFileNameFormat?: string, reportUserGroupId?: number, revisionMailListId?: number, reportPostExecutionExcelMacro?: string, reportPreExecutionExcelMacro?: string, reportDeleted?: AnyType, observe?: 'body', reportProgress?: boolean): Observable<ListResponseReports>;
     public apiReportsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, reportId?: number, reportName?: string, reportDescription?: string, reportFirstDate?: Date, reportNextDate?: Date, reportDateCell?: string, reportExcelFileName?: string, centralId?: number, reportAdminNote?: string, reportValidationRequired?: string, reportOpRange?: string, reportExecHour?: number, mailListId?: number, reportNextUtcDate?: Date, userId?: number, reportFileNameFormat?: string, reportAttachedFileNameFormat?: string, reportUserGroupId?: number, revisionMailListId?: number, reportPostExecutionExcelMacro?: string, reportPreExecutionExcelMacro?: string, reportDeleted?: AnyType, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ListResponseReports>>;
     public apiReportsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, reportId?: number, reportName?: string, reportDescription?: string, reportFirstDate?: Date, reportNextDate?: Date, reportDateCell?: string, reportExcelFileName?: string, centralId?: number, reportAdminNote?: string, reportValidationRequired?: string, reportOpRange?: string, reportExecHour?: number, mailListId?: number, reportNextUtcDate?: Date, userId?: number, reportFileNameFormat?: string, reportAttachedFileNameFormat?: string, reportUserGroupId?: number, revisionMailListId?: number, reportPostExecutionExcelMacro?: string, reportPreExecutionExcelMacro?: string, reportDeleted?: AnyType, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ListResponseReports>>;
-    public apiReportsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, reportId?: number, reportName?: string, reportDescription?: string, reportFirstDate?: Date, reportNextDate?: Date, reportDateCell?: string, reportExcelFileName?: string, centralId?: number, reportAdminNote?: string, reportValidationRequired?: string, reportOpRange?: string, reportExecHour?: number, mailListId?: number, reportNextUtcDate?: Date, userId?: number, reportFileNameFormat?: string, reportAttachedFileNameFormat?: string, reportUserGroupId?: number, revisionMailListId?: number, reportPostExecutionExcelMacro?: string, reportPreExecutionExcelMacro?: string, reportDeleted?: AnyType, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiReportsGet(skip?: number, take?: number, orderBy?: string, orderDirection?: string, reportId?: number, reportName?: string, reportDescription?: string, reportFirstDate?: Date, reportNextDate?: Date, reportDateCell?: string, reportExcelFileName?: string, centralId?: number, reportAdminNote?: string, reportValidationRequired?: string, reportOpRange?: string, reportExecHour?: number, mailListId?: number, reportNextUtcDate?: Date, userId?: number, reportFileNameFormat?: string, reportAttachedFileNameFormat?: string, reportUserGroupId?: number, revisionMailListId?: number, reportPostExecutionExcelMacro?: string, reportPreExecutionExcelMacro?: string, reportDeleted?: AnyType, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
 
 
@@ -120,7 +122,7 @@ export class ReportsService {
 
 
 
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        let queryParameters = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         if (skip !== undefined && skip !== null) {
             queryParameters = queryParameters.set('skip', <any>skip);
         }
@@ -147,17 +149,17 @@ export class ReportsService {
             const year = cloned.getFullYear();
             const month = (cloned.getMonth() + 1).toString().padStart(2, '0');
             const day = cloned.getDate().toString().padStart(2, '0');
-  
+
             queryParameters = queryParameters.set('reportFirstDate', <any>`${year}-${month}-${day}T00:00:00Z`);
-          }
-          if (reportNextDate !== undefined && reportNextDate !== null) {
+        }
+        if (reportNextDate !== undefined && reportNextDate !== null) {
             const cloned = new Date(reportNextDate);
             const year = cloned.getFullYear();
             const month = (cloned.getMonth() + 1).toString().padStart(2, '0');
             const day = cloned.getDate().toString().padStart(2, '0');
-  
+
             queryParameters = queryParameters.set('reportNextDate', <any>`${year}-${month}-${day}T00:00:00Z`);
-          }
+        }
         if (reportDateCell !== undefined && reportDateCell !== null) {
             queryParameters = queryParameters.set('reportDateCell', <any>reportDateCell);
         }
@@ -234,7 +236,7 @@ export class ReportsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<ListResponseReports>('get',`${this.basePath}/api/Reports`,
+        return this.httpClient.request<ListResponseReports>('get', `${this.basePath}/api/Reports`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -255,7 +257,7 @@ export class ReportsService {
     public apiReportsIdDelete(id: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public apiReportsIdDelete(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public apiReportsIdDelete(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiReportsIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiReportsIdDelete(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling apiReportsIdDelete.');
@@ -282,7 +284,7 @@ export class ReportsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/Reports/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<any>('delete', `${this.basePath}/api/Reports/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -302,7 +304,7 @@ export class ReportsService {
     public apiReportsIdGet(id: number, observe?: 'body', reportProgress?: boolean): Observable<Report>;
     public apiReportsIdGet(id: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Report>>;
     public apiReportsIdGet(id: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Report>>;
-    public apiReportsIdGet(id: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiReportsIdGet(id: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling apiReportsIdGet.');
@@ -332,7 +334,7 @@ export class ReportsService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Report>('get',`${this.basePath}/api/Reports/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<Report>('get', `${this.basePath}/api/Reports/${encodeURIComponent(String(id))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -353,7 +355,7 @@ export class ReportsService {
     public apiReportsIdPut(id: number, body?: Report, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public apiReportsIdPut(id: number, body?: Report, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public apiReportsIdPut(id: number, body?: Report, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiReportsIdPut(id: number, body?: Report, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiReportsIdPut(id: number, body?: Report, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
         if (id === null || id === undefined) {
             throw new Error('Required parameter id was null or undefined when calling apiReportsIdPut.');
@@ -388,7 +390,7 @@ export class ReportsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('put',`${this.basePath}/api/Reports/${encodeURIComponent(String(id))}`,
+        return this.httpClient.request<any>('put', `${this.basePath}/api/Reports/${encodeURIComponent(String(id))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -409,7 +411,7 @@ export class ReportsService {
     public apiReportsPost(body?: Report, observe?: 'body', reportProgress?: boolean): Observable<Report>;
     public apiReportsPost(body?: Report, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Report>>;
     public apiReportsPost(body?: Report, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Report>>;
-    public apiReportsPost(body?: Report, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiReportsPost(body?: Report, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
 
         let headers = this.defaultHeaders;
@@ -443,7 +445,7 @@ export class ReportsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<Report>('post',`${this.basePath}/api/Reports`,
+        return this.httpClient.request<Report>('post', `${this.basePath}/api/Reports`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -464,7 +466,7 @@ export class ReportsService {
     public apiReportsRemoveByIdsPut(body?: Array<number>, observe?: 'body', reportProgress?: boolean): Observable<any>;
     public apiReportsRemoveByIdsPut(body?: Array<number>, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
     public apiReportsRemoveByIdsPut(body?: Array<number>, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public apiReportsRemoveByIdsPut(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public apiReportsRemoveByIdsPut(body?: Array<number>, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
 
 
         let headers = this.defaultHeaders;
@@ -495,7 +497,7 @@ export class ReportsService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<any>('put',`${this.basePath}/api/Reports/removeByIds`,
+        return this.httpClient.request<any>('put', `${this.basePath}/api/Reports/removeByIds`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -510,13 +512,15 @@ export class ReportsService {
      * 
      * 
      * @param file 
+     * @param reportId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public filePostForm(file?: Blob, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
-    public filePostForm(file?: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
-    public filePostForm(file?: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
-    public filePostForm(file?: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public filePostForm(file?: Blob, reportId?: number, observe?: 'body', reportProgress?: boolean): Observable<boolean>;
+    public filePostForm(file?: Blob, reportId?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<boolean>>;
+    public filePostForm(file?: Blob, reportId?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<boolean>>;
+    public filePostForm(file?: Blob, reportId?: number, observe: any = 'body', reportProgress: boolean = false): Observable<any> {
+
 
 
         let headers = this.defaultHeaders;
@@ -555,14 +559,17 @@ export class ReportsService {
         if (useForm) {
             formParams = new FormData();
         } else {
-            formParams = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+            formParams = new HttpParams({ encoder: new CustomHttpUrlEncodingCodec() });
         }
 
         if (file !== undefined) {
             formParams = formParams.append('File', <any>file) as any || formParams;
         }
+        if (reportId !== undefined) {
+            formParams = formParams.append('reportId', <any>reportId) as any || formParams;
+        }
 
-        return this.httpClient.request<boolean>('post',`${this.basePath}/file`,
+        return this.httpClient.request<boolean>('post', `${this.basePath}/file`,
             {
                 body: convertFormParamsToString ? formParams.toString() : formParams,
                 withCredentials: this.configuration.withCredentials,

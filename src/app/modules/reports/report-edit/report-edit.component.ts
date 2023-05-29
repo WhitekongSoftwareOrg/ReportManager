@@ -26,7 +26,7 @@ export class ReportEditComponent implements OnInit {
     private mailService: MailListsService,
     private centralService: CentralsService,
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.title.changeTitle('report.title-edit');
@@ -41,7 +41,7 @@ export class ReportEditComponent implements OnInit {
           file: null,
           reportNextDate: new Date(res.reportNextDate!),
           reportNextUtcDate: new Date(res.reportNextUtcDate!),
-          reportFirstDate: new Date(res.reportFirstDate!)
+          reportFirstDate: new Date(res.reportFirstDate!),
         }
         this.userGroupService.apiUserGroupGet().subscribe((res) => {
           (
@@ -137,93 +137,90 @@ export class ReportEditComponent implements OnInit {
       // nextDate = this.data.reportFirstDate!;
       if (this.form?.value?.file) {
         this.reportsService
-        .filePostForm(
-          new File(
-            [this.form.value.file[0]],
-            this.data.reportExcelFileName || '',
-            { type: this.form.value.file[0].type }
+          .filePostForm(
+            this.form.value.file[0],
+            this.id as any
           )
-        )
-        .subscribe(
-          (res) => {
-            this.reportsService
-            .apiReportsIdPut(this.id as any, {
-              ...this.data,
-              reportNextDate: this.getParasedDate(
-                new Date(nextDate as any)
-              ) as any,
-              reportFirstDate: this.getParasedDate(
-                new Date(this.data.reportFirstDate as any)
-              ) as any,
-              reportNextUtcDate: new Date(
-                Date.UTC(
-                  nextDate.getUTCFullYear(),
-                  nextDate.getUTCMonth(),
-                  nextDate.getUTCDate(),
-                  nextDate.getUTCHours(),
-                  nextDate.getUTCMinutes(),
-                  nextDate.getUTCSeconds()
-                )
-              ),
-              userId: Number.parseInt(
-                localStorage.getItem('ctk-userid') || '0'
-              ),
-              reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}',
-            })
-            .subscribe(
-              (res) => {
-                this.router.navigate(['/reports']);
-              },
-              (error) => {
-                alert(
-                  'Ha ocurrido un error durante la creación de informes'
+          .subscribe(
+            (res) => {
+              this.reportsService
+                .apiReportsIdPut(this.id as any, {
+                  ...this.data,
+                  reportNextDate: this.getParasedDate(
+                    new Date(nextDate as any)
+                  ) as any,
+                  reportFirstDate: this.getParasedDate(
+                    new Date(this.data.reportFirstDate as any)
+                  ) as any,
+                  reportNextUtcDate: new Date(
+                    Date.UTC(
+                      nextDate.getUTCFullYear(),
+                      nextDate.getUTCMonth(),
+                      nextDate.getUTCDate(),
+                      nextDate.getUTCHours(),
+                      nextDate.getUTCMinutes(),
+                      nextDate.getUTCSeconds()
+                    )
+                  ),
+                  userId: Number.parseInt(
+                    localStorage.getItem('ctk-userid') || '0'
+                  ),
+                  reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}',
+                })
+                .subscribe(
+                  (res) => {
+                    this.router.navigate(['/reports']);
+                  },
+                  (error) => {
+                    alert(
+                      'Ha ocurrido un error durante la creación de informes'
+                    );
+                  }
                 );
+            },
+            (error) => {
+              if (error.error == "Exist") {
+                alert('Ya existe un fichero con ese nombre');
+                return;
               }
-            );
-          },
-          (error) => {
-            if (error.error == "Exist") {
-              alert('Ya existe un fichero con ese nombre');
-              return;
+              alert('Ha ocurrido un error al subir el fichero');
             }
-            alert('Ha ocurrido un error al subir el fichero');
-          }
-        );
+          );
       } else {
         this.reportsService
-        .apiReportsIdPut(this.id as any, {
-          ...this.data,
-          reportNextDate: this.getParasedDate(
-            new Date(nextDate as any)
-          ) as any,
-          reportFirstDate: this.getParasedDate(
-            new Date(this.data.reportFirstDate as any)
-          ) as any,
-          reportNextUtcDate: new Date(
-            Date.UTC(
-              nextDate.getUTCFullYear(),
-              nextDate.getUTCMonth(),
-              nextDate.getUTCDate(),
-              nextDate.getUTCHours(),
-              nextDate.getUTCMinutes(),
-              nextDate.getUTCSeconds()
-            )
-          ),
-          userId: Number.parseInt(
-            localStorage.getItem('ctk-userid') || '0'
-          ),
-          reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}',
-        })
-        .subscribe(
-          (res) => {
-            this.router.navigate(['/reports']);
-          },
-          (error) => {
-            alert(
-              'Ha ocurrido un error durante la creación de informes'
-            );
-          }
-        );
+          .apiReportsIdPut(this.id as any, {
+            ...this.data,
+            reportNextDate: this.getParasedDate(
+              new Date(nextDate as any)
+            ) as any,
+            reportFirstDate: this.getParasedDate(
+              new Date(this.data.reportFirstDate as any)
+            ) as any,
+            reportNextUtcDate: new Date(
+              Date.UTC(
+                nextDate.getUTCFullYear(),
+                nextDate.getUTCMonth(),
+                nextDate.getUTCDate(),
+                nextDate.getUTCHours(),
+                nextDate.getUTCMinutes(),
+                nextDate.getUTCSeconds()
+              )
+            ),
+            userId: Number.parseInt(
+              localStorage.getItem('ctk-userid') || '0'
+            ),
+            reportFileNameFormat: '${ReportManager} - ${Date} - ${Id}',
+          })
+          .subscribe(
+            (res) => {
+              this.router.navigate(['/reports']);
+            },
+            (error) => {
+              alert(
+                'Ha ocurrido un error durante la creación de informes'
+              );
+            }
+          );
       }
       this.data.reportExcelFileName = this.form?.value?.file?.[0]?.name;
 

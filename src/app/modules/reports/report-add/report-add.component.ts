@@ -121,7 +121,8 @@ export class ReportAddComponent implements OnInit {
             [this.form.value.file[0]],
             this.model.reportExcelFileName || '',
             { type: this.form.value.file[0].type }
-          )
+          ),
+          0
         )
         .subscribe(
           (res) => {
