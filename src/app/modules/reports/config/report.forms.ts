@@ -26,7 +26,8 @@ export const reportFields: FormlyFieldConfig[] = [
       label: 'Sitio',
       required: true,
       options: [],
-    }},
+    }
+  },
   {
     key: 'reportUserGroupId',
     type: 'select',
@@ -86,7 +87,8 @@ export const reportFields: FormlyFieldConfig[] = [
     props: {
       label: 'Celda de la fecha',
       required: true,
-      maxLength: 40
+      maxLength: 40,
+      pattern: /^([a-zA-Z][a-zA-Z0-9_]{0,254})!(\w{1,3}\d{1,7})$/,
     },
   },
   {
@@ -159,12 +161,14 @@ export const reportFields: FormlyFieldConfig[] = [
     props: {
       maxLength: 100,
       label: 'Rango para comentarios del operador',
+      pattern: /^([a-zA-Z][a-zA-Z0-9_]{0,254})!(\w{1,3}\d{1,7})$/,
     },
-    expressions : {
+    expressions: {
       'props.required': (field: FormlyFieldConfig) => {
         return field.model?.reportValidationRequired;
       },
-    }
+    },
+    hideExpression: '!model.reportValidationRequired'
   },
   {
     key: 'reportExecHour',
