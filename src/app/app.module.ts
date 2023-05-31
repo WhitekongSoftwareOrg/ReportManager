@@ -23,6 +23,7 @@ import { AuthInterceptorService } from './shared/interceptors/auth.interceptor';
 import { TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { APP_BASE_HREF } from '@angular/common';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -56,7 +57,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     }),
   ],
   providers: [
-    { provide: BASE_PATH, useValue: environment.url },
+    [{provide: APP_BASE_HREF, useValue: '/rmadminnew/'}],
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoadingInterceptor,

@@ -27,7 +27,7 @@ import { Configuration }                                     from '../configurat
 @Injectable()
 export class PeriodicitiesService {
 
-    protected basePath = 'https://194.163.180.64:44348';
+    protected basePath = 'https://pi-app-01.gruptersa.local/rmadminAPI';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
