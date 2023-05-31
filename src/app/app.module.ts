@@ -26,7 +26,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
+  return new TranslateHttpLoader(http, '/rmadminnew/assets/i18n/');
 }
 @NgModule({
   declarations: [AppComponent],
