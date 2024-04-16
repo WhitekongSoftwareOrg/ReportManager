@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url: 'https://pi-app-01.gruptersa.local/rmadminAPI',
+  url: 'https://ceteckpiapp.grupoceteck.com:44348',
   urlfront: 'https://194.163.180.64',
 };

@@ -30,7 +30,7 @@ import { Configuration } from '../configuration';
 @Injectable()
 export class ReportsService {
 
-    protected basePath = 'https://pi-app-01.gruptersa.local/rmadminAPI';
+    protected basePath = 'https://ceteckpiapp.grupoceteck.com:44348';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
